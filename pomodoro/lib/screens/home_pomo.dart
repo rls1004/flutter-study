@@ -18,7 +18,7 @@ class _HomePomoState extends State<HomePomo> {
   bool isRunning = false;
   bool isBreak = false;
 
-  late Timer timer;
+  late Timer? timer;
 
   void onPressButtons(int min) {
     setState(() {
@@ -67,14 +67,14 @@ class _HomePomoState extends State<HomePomo> {
   }
 
   void onPausePressed() {
-    timer.cancel();
+    timer!.cancel();
     setState(() {
       isRunning = false;
     });
   }
 
   void onStopPressed() {
-    timer.cancel();
+    timer?.cancel();
     setState(() {
       isRunning = false;
       totlaSeconds = isBreak ? breakTime : selectedMin * 60;
