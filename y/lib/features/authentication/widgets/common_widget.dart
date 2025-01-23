@@ -5,7 +5,6 @@ import 'package:y/constants/sizes.dart';
 AppBar commonAppBar() {
   return AppBar(
     backgroundColor: Colors.white,
-    elevation: 0,
     surfaceTintColor: Colors.transparent,
     title: FaIcon(
       FontAwesomeIcons.twitter,
