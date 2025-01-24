@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:y/constants/gaps.dart';
 import 'package:y/constants/sizes.dart';
 import 'package:y/features/authentication/interests_screen.dart';
-import 'package:y/features/authentication/widgets/common_widget.dart';
+import 'package:y/features/authentication/utils/utils.dart';
 
 class PasswordScreen extends StatefulWidget {
   const PasswordScreen({super.key});
@@ -39,7 +39,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
   }
 
   bool _isPasswordValid() {
-    return _password.isNotEmpty && _password.length > 8;
+    return _password.isNotEmpty && _password.length >= 8;
   }
 
   void _onNextTap() {

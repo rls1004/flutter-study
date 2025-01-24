@@ -5,7 +5,6 @@ import 'package:y/constants/sizes.dart';
 AppBar commonAppBar({bool canPop = true}) {
   return AppBar(
     automaticallyImplyLeading: canPop,
-    surfaceTintColor: Colors.transparent,
     title: FaIcon(
       FontAwesomeIcons.twitter,
       size: 30,
@@ -39,7 +38,6 @@ Text normalText(String text) {
 BottomAppBar bottomNext(GestureTapCallback onNextTap,
     {bool disable = false, String text = 'Next'}) {
   return BottomAppBar(
-    color: Colors.transparent,
     child: GestureDetector(
       onTap: disable ? () {} : onNextTap,
       child: Container(

@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:y/constants/gaps.dart';
 import 'package:y/constants/sizes.dart';
-import 'package:y/features/authentication/widgets/common_widget.dart';
+import 'package:y/features/authentication/utils/utils.dart';
 import 'package:y/features/authentication/widgets/form_button.dart';
 
 typedef CategoryProperty = Map<String, dynamic>;
 typedef Category = Map<String, CategoryProperty>;
 typedef Interests = Map<String, bool>;
-
-Map tmp = {"isSelected": false, "details": null};
 
 Category categories = {
   "Daily Life": {"isSelected": false, "details": dayliLife},
@@ -390,81 +388,4 @@ GestureDetector makeInterestButton(BuildContext context, String category,
       ),
     ),
   );
-}
-
-class InterestButton extends StatefulWidget {
-  final StreamController<int> controller;
-  bool _isSelected = false;
-  final String interest;
-  final ValueChanged<bool> onChanged;
-
-  InterestButton({
-    super.key,
-    required this.interest,
-    required this.controller,
-    required this.onChanged,
-  });
-
-  @override
-  State<InterestButton> createState() => _InterestButtonState();
-}
-
-class _InterestButtonState extends State<InterestButton> {
-  void _onTap() {
-    setState(() {
-      widget._isSelected = !widget._isSelected;
-      widget.controller.add(widget._isSelected ? 1 : -1);
-      widget.onChanged(widget._isSelected);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: _onTap,
-      child: AnimatedContainer(
-        duration: Duration(milliseconds: 300),
-        padding: EdgeInsets.symmetric(
-          vertical: Sizes.size10,
-          horizontal: Sizes.size10,
-        ),
-        width: 150,
-        height: 80,
-        decoration: BoxDecoration(
-          color: widget._isSelected
-              ? Theme.of(context).primaryColor
-              : Colors.white,
-          borderRadius: BorderRadius.circular(Sizes.size10),
-          border: Border.all(
-            color: Colors.black.withOpacity(0.2),
-            width: widget._isSelected ? 0 : 1,
-          ),
-        ),
-        child: Stack(
-          children: [
-            Container(
-              alignment: Alignment.topRight,
-              child: FaIcon(
-                FontAwesomeIcons.solidCircleCheck,
-                size: Sizes.size16,
-                color: Colors.white,
-              ),
-            ),
-            Container(
-              alignment: Alignment.bottomLeft,
-              child: Text(
-                widget.interest,
-                style: TextStyle(
-                  fontSize: Sizes.size16,
-                  fontWeight: FontWeight.w600,
-                  color: widget._isSelected ? Colors.white : Colors.black,
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

@@ -4,8 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:y/constants/gaps.dart';
 import 'package:y/constants/sizes.dart';
 import 'package:y/features/authentication/password_screen.dart';
-import 'package:y/features/authentication/widgets/common_widget.dart';
-import 'package:y/features/authentication/widgets/form_button.dart';
+import 'package:y/features/authentication/utils/utils.dart';
 
 class AuthScreen extends StatefulWidget {
   final bool? settingAgree;

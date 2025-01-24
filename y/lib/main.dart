@@ -25,6 +25,7 @@ class YApp extends StatelessWidget {
           appBarTheme: AppBarTheme(
             backgroundColor: Colors.white,
             elevation: 0,
+            surfaceTintColor: Colors.transparent,
           ),
           scaffoldBackgroundColor: Colors.white,
           bottomAppBarTheme: BottomAppBarTheme(
