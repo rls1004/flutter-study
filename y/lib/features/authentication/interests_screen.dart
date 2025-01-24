@@ -13,26 +13,29 @@ typedef Interests = Map<String, bool>;
 
 Category categories = {
   "Daily Life": {"isSelected": false, "details": dayliLife},
-  "Comedy": {"isSelected": false, "details": {}},
+  "Comedy": {"isSelected": false, "details": empty},
   "Entertainment": {"isSelected": false, "details": entertainments},
-  "Animals": {"isSelected": false, "details": {}},
-  "Food": {"isSelected": false, "details": {}},
-  "Beauty & Style": {"isSelected": false, "details": {}},
+  "Animals": {"isSelected": false, "details": empty},
+  "Food": {"isSelected": false, "details": empty},
+  "Beauty & Style": {"isSelected": false, "details": empty},
   "Music": {"isSelected": false, "details": musics},
-  "Learning": {"isSelected": false, "details": {}},
-  "Talent": {"isSelected": false, "details": {}},
-  "Sports": {"isSelected": false, "details": {}},
-  "Auto": {"isSelected": false, "details": {}},
-  "Family": {"isSelected": false, "details": {}},
-  "Fitness & Health": {"isSelected": false, "details": {}},
-  "DIY & Life Hacks": {"isSelected": false, "details": {}},
-  "Arts & Crafts": {"isSelected": false, "details": {}},
-  "Dance": {"isSelected": false, "details": {}},
-  "Outdoors": {"isSelected": false, "details": {}},
-  "Oddly Satisfying": {"isSelected": false, "details": {}},
-  "Home & Garden": {"isSelected": false, "details": {}},
+  "Learning": {"isSelected": false, "details": empty},
+  "Talent": {"isSelected": false, "details": empty},
+  "Sports": {"isSelected": false, "details": empty},
+  "Auto": {"isSelected": false, "details": empty},
+  "Family": {"isSelected": false, "details": empty},
+  "Fitness & Health": {"isSelected": false, "details": empty},
+  "DIY & Life Hacks": {"isSelected": false, "details": empty},
+  "Arts & Crafts": {"isSelected": false, "details": empty},
+  "Dance": {"isSelected": false, "details": empty},
+  "Outdoors": {"isSelected": false, "details": empty},
+  "Oddly Satisfying": {"isSelected": false, "details": empty},
+  "Home & Garden": {"isSelected": false, "details": empty},
 };
 
+Interests empty = {
+  "Empty": false,
+};
 Interests musics = {
   "Rap": false,
   "R&B & sourl": false,
@@ -140,8 +143,19 @@ class _InterestsScreenState extends State<InterestsScreen> {
 
   List<String> separateList(Interests interests, int i) {
     var interestsList = interests.keys.toList();
-    int start = i * (interestsList.length / 3).toInt();
-    int end = (i + 1) * (interestsList.length / 3).toInt();
+    int itemPerLine = (interestsList.length / 3).toInt();
+    int restItems = interestsList.length - itemPerLine * 3;
+    if (i == 0) {
+      itemPerLine += restItems;
+    }
+    int start = i * itemPerLine;
+    int end = (i + 1) * itemPerLine;
+
+    if (i != 0) {
+      start += restItems;
+      end += restItems;
+    }
+
     if (end >= interestsList.length) end = interestsList.length;
 
     if (i != 0 && start < (i) * (interestsList.length / 3).toInt()) return [];
@@ -152,7 +166,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(),
+      appBar: commonAppBar(canPop: widget.interestPart == 1 ? false : true),
       body: SafeArea(
         child: Scrollbar(
           child: widget.interestPart == 1
