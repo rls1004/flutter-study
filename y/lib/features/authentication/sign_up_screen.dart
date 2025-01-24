@@ -4,12 +4,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:y/constants/gaps.dart';
 import 'package:y/constants/sizes.dart';
+import 'package:y/features/authentication/auth_screen.dart';
 import 'package:y/features/authentication/setting_screen.dart';
 import 'package:y/features/authentication/widgets/common_widget.dart';
 import 'package:y/features/authentication/widgets/form_button.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+  final bool? settingAgree;
+  final String? name;
+  final String? email;
+  final String? dateOfBirth;
+  const SignUpScreen(
+      {super.key, this.settingAgree, this.name, this.email, this.dateOfBirth});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -29,8 +35,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   bool _isNameValid = false;
   bool _isEmailValid = false;
-
-  bool _isTapedOnNext = false;
 
   @override
   void initState() {
@@ -55,7 +59,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     initialDate =
         DateTime(initialDate.year - 12, initialDate.month, initialDate.day);
-    // _setTextFiledDate(initialDate);
+
+    if (widget.settingAgree != null) {
+      _nameController.value = TextEditingValue(text: widget.name!);
+      _emailController.value = TextEditingValue(text: widget.email!);
+      _birtdayController.value = TextEditingValue(text: widget.dateOfBirth!);
+
+      _name = widget.name!;
+      _emailOrPhone = widget.email!;
+      _dateOfBirth = widget.dateOfBirth!;
+    }
   }
 
   @override
@@ -81,10 +94,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _onNextTap() {
-    _isTapedOnNext = true;
+    if (!_isNameValid || !_isEmailValid || _dateOfBirth.isEmpty) return;
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => SettingScreen(),
+        builder: (context) => SettingScreen(
+            name: _name, email: _emailOrPhone, dateOfBirth: _dateOfBirth),
+      ),
+    );
+  }
+
+  void _onSignUpTap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => AuthScreen(
+          name: widget.name,
+          email: widget.email,
+          dateOfBirth: widget.dateOfBirth,
+          settingAgree: widget.settingAgree,
+        ),
       ),
     );
   }
@@ -100,11 +127,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _birtdayController.value = TextEditingValue(text: formattedDate);
     _dateOfBirth = formattedDate;
   }
-
-  // void _onSubmit() {
-  //   if (_emailOrPhone.isEmpty || _isEmailValid() != null) return;
-  //   Navigator.push(context, MaterialPageRoute(builder: (context) => {}));
-  // }
 
   void _showDatePicker() {
     setState(() {
@@ -158,7 +180,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   isDateField: true,
                 ),
                 Gaps.v10,
-                _isTapedOnNext
+                (widget.settingAgree != null || !_isTapedDate)
                     ? Gaps.v1
                     : Text(
                         'This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.',
@@ -166,7 +188,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           color: Colors.grey.shade600,
                         ),
                       ),
-                _isTapedOnNext
+                widget.settingAgree != null
                     ? Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -213,11 +235,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: _isTapedOnNext
+        bottomNavigationBar: widget.settingAgree != null
             ? BottomAppBar(
                 elevation: 0,
                 color: Colors.white,
                 child: GestureDetector(
+                  onTap: _onSignUpTap,
                   child: Container(
                     width: 200,
                     decoration: BoxDecoration(
@@ -247,7 +270,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 height: _isTapedDate ? 300 : 0,
                 child: _isTapedDate
                     ? BottomAppBar(
-                        elevation: 0,
                         color: Colors.white,
                         child: CupertinoDatePicker(
                           initialDateTime: initialDate,
@@ -262,17 +284,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget makeTextField(BuildContext context, String hint, String label,
-      TextEditingController ctrl,
-      {String? errorText,
-      GestureTapCallback? onTap,
-      bool validCheck = false,
-      bool isDateField = false}) {
+  Widget makeTextField(
+    BuildContext context,
+    String hint,
+    String label,
+    TextEditingController ctrl, {
+    String? errorText,
+    GestureTapCallback? onTap,
+    bool validCheck = false,
+    bool isDateField = false,
+  }) {
     return Stack(
       children: [
         TextField(
-          readOnly: isDateField || _isTapedOnNext ? true : false,
-          showCursor: _isTapedOnNext ? false : true,
+          readOnly: isDateField || widget.settingAgree != null ? true : false,
+          showCursor: widget.settingAgree != null ? false : true,
           controller: ctrl,
           onTap: onTap,
           keyboardType: TextInputType.emailAddress,

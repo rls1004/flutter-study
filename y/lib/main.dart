@@ -21,13 +21,15 @@ class YApp extends StatelessWidget {
     return MaterialApp(
       title: 'YApp',
       theme: ThemeData(
-        primaryColor: Colors.blue.shade600,
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.white,
-          elevation: 0,
-        ),
-        scaffoldBackgroundColor: Colors.white,
-      ),
+          primaryColor: Colors.blue.shade600,
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.white,
+            elevation: 0,
+          ),
+          scaffoldBackgroundColor: Colors.white,
+          bottomAppBarTheme: BottomAppBarTheme(
+            color: Colors.white,
+          )),
       home: HomeScreen(),
     );
   }

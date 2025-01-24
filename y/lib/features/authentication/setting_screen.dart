@@ -2,10 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:y/constants/gaps.dart';
 import 'package:y/constants/sizes.dart';
+import 'package:y/features/authentication/sign_up_screen.dart';
 import 'package:y/features/authentication/widgets/common_widget.dart';
 
 class SettingScreen extends StatefulWidget {
-  const SettingScreen({super.key});
+  final String? name;
+  final String? email;
+  final String? dateOfBirth;
+
+  const SettingScreen({super.key, this.name, this.email, this.dateOfBirth});
 
   @override
   State<SettingScreen> createState() => _SettingScreenState();
@@ -21,7 +26,16 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   void _onNextTap() {
-    Navigator.of(context).pop();
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SignUpScreen(
+          settingAgree: _isSwitched,
+          name: widget.name,
+          email: widget.email,
+          dateOfBirth: widget.dateOfBirth,
+        ),
+      ),
+    );
   }
 
   @override
@@ -95,34 +109,7 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.transparent,
-        child: GestureDetector(
-          onTap: _onNextTap,
-          child: Container(
-            width: 200,
-            height: 70,
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(45),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  textAlign: TextAlign.center,
-                  'Next',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800,
-                    fontSize: Sizes.size20,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+      bottomNavigationBar: bottomNext(_onNextTap),
     );
   }
 }
