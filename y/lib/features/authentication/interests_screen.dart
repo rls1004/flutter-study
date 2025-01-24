@@ -89,17 +89,14 @@ class InterestsScreen extends StatefulWidget {
 
 class _InterestsScreenState extends State<InterestsScreen> {
   final ScrollController _scrollController = ScrollController();
-  final StreamController<int> _streamController = StreamController();
-  int _totalSelect = 0;
+  int _partOneTotalSelect = 0;
+  int _partTwoeTotalSelect = 0;
+
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(() {});
-    _streamController.stream.listen((event) {
-      setState(() {
-        _totalSelect += event;
-      });
-    });
+    initInterests();
+    _partTwoeTotalSelect = 0;
   }
 
   @override
@@ -108,28 +105,39 @@ class _InterestsScreenState extends State<InterestsScreen> {
     super.dispose();
   }
 
+  void initInterests() {
+    for (var category in categories.values.toList()) {
+      var interests = category['details'];
+      for (var interest in interests.keys) {
+        interests[interest] = false;
+      }
+      interests.values;
+    }
+  }
+
   void _onTap(String interest) {
     setState(() {
       if (categories[interest]!["isSelected"] == false) {
-        if (_totalSelect == 3) return;
-        _totalSelect++;
+        if (_partOneTotalSelect == 3) return;
+        _partOneTotalSelect++;
       } else {
-        _totalSelect--;
+        _partOneTotalSelect--;
       }
       categories[interest]!["isSelected"] =
           !categories[interest]!["isSelected"]!;
     });
   }
 
-  void _onDetailTap(String category, String interest) {
+  void _onInterestTap(String category, String interest) {
     setState(() {
       categories[category]!["details"][interest] =
           !categories[category]!["details"][interest];
+      _partTwoeTotalSelect += 1;
     });
   }
 
   void _onNextTap() {
-    if (_totalSelect < 3) return;
+    if (_partOneTotalSelect < 3) return;
     if (widget.interestPart == 1) {
       Navigator.of(context).push(
         MaterialPageRoute(
@@ -276,7 +284,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
                                                   interest,
                                                   subject.value["details"]
                                                       [interest],
-                                                  _onDetailTap,
+                                                  _onInterestTap,
                                                 ),
                                             ],
                                           ),
@@ -302,16 +310,16 @@ class _InterestsScreenState extends State<InterestsScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(widget.interestPart == 1
-                  ? (_totalSelect < 3
-                      ? '$_totalSelect of 3 selected'
+                  ? (_partOneTotalSelect < 3
+                      ? '$_partOneTotalSelect of 3 selected'
                       : 'Great work 🎉')
                   : ''),
               GestureDetector(
                 onTap: _onNextTap,
                 child: FormButton(
                     disabled: widget.interestPart == 1
-                        ? (_totalSelect < 3 ? true : false)
-                        : false),
+                        ? (_partOneTotalSelect < 3 ? true : false)
+                        : (_partTwoeTotalSelect < 3 ? true : false)),
               ),
             ],
           ),
