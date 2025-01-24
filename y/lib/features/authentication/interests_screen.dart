@@ -13,7 +13,7 @@ typedef Interests = Map<String, bool>;
 
 Map tmp = {"isSelected": false, "details": null};
 
-Category interests = {
+Category categories = {
   "Daily Life": {"isSelected": false, "details": dayliLife},
   "Comedy": {"isSelected": false, "details": {}},
   "Entertainment": {"isSelected": false, "details": entertainments},
@@ -109,20 +109,21 @@ class _InterestsScreenState extends State<InterestsScreen> {
 
   void _onTap(String interest) {
     setState(() {
-      if (interests[interest]!["isSelected"] == false) {
+      if (categories[interest]!["isSelected"] == false) {
         if (_totalSelect == 3) return;
         _totalSelect++;
       } else {
         _totalSelect--;
       }
-      interests[interest]!["isSelected"] = !interests[interest]!["isSelected"]!;
+      categories[interest]!["isSelected"] =
+          !categories[interest]!["isSelected"]!;
     });
   }
 
   void _onDetailTap(String category, String interest) {
     setState(() {
-      interests[category]!["details"][interest] =
-          !interests[category]!["details"][interest];
+      categories[category]!["details"][interest] =
+          !categories[category]!["details"][interest];
     });
   }
 
@@ -181,9 +182,9 @@ class _InterestsScreenState extends State<InterestsScreen> {
                             runSpacing: 10,
                             spacing: 10,
                             children: [
-                              for (var interest in interests.keys)
-                                makeInterestButton(context, interest,
-                                    interests[interest]!["isSelected"], _onTap)
+                              for (var interest in categories.keys)
+                                makeCategoryButton(context, interest,
+                                    categories[interest]!["isSelected"], _onTap)
                             ],
                           ),
                         )
@@ -220,7 +221,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
                             ),
                           ],
                         ),
-                        for (var subject in interests.entries
+                        for (var subject in categories.entries
                             .where((e) => e.value["isSelected"] == true))
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -257,7 +258,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
                                             children: [
                                               for (var interest in separateList(
                                                   subject.value["details"], i))
-                                                makeDetailInterestButton(
+                                                makeInterestButton(
                                                   context,
                                                   subject.key,
                                                   interest,
@@ -308,7 +309,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
   }
 }
 
-GestureDetector makeInterestButton(
+GestureDetector makeCategoryButton(
     BuildContext context, String interest, bool isSelected, Function onTap) {
   return GestureDetector(
     onTap: () => onTap(interest),
@@ -356,7 +357,7 @@ GestureDetector makeInterestButton(
   );
 }
 
-GestureDetector makeDetailInterestButton(BuildContext context, String category,
+GestureDetector makeInterestButton(BuildContext context, String category,
     String interest, bool isSelected, Function onTap) {
   return GestureDetector(
     onTap: () => onTap(category, interest),
