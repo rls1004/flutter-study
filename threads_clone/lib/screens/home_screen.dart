@@ -2,6 +2,8 @@ import 'package:faker/faker.dart' as develop;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:threads_clone/constants/gaps.dart';
+import 'package:threads_clone/constants/sizes.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,7 +17,7 @@ class HomeScreen extends StatelessWidget {
             backgroundColor: Colors.white,
             title: FaIcon(
               FontAwesomeIcons.threads,
-              size: 40,
+              size: Sizes.size40,
               color: Colors.black,
             ),
           ),
@@ -59,9 +61,7 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             makeAuthorProfile(),
-            SizedBox(
-              width: 6,
-            ),
+            Gaps.h6,
             representAuthorAndText(time)
           ],
         ),
@@ -83,9 +83,7 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         if (numOfPhothos > 0) representPhotos(numOfPhothos),
-                        SizedBox(
-                          height: 10,
-                        ),
+                        Gaps.v10,
                         makeButtonsForPost()
                       ],
                     ),
@@ -141,7 +139,7 @@ class HomeScreen extends StatelessWidget {
                 child: FaIcon(
                   FontAwesomeIcons.plus,
                   color: Colors.white,
-                  size: 12,
+                  size: Sizes.size10,
                 ),
               ),
             ),
@@ -156,9 +154,7 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 6,
-          ),
+          Gaps.v6,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -170,9 +166,7 @@ class HomeScreen extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(
-                    width: 4,
-                  ),
+                  Gaps.h4,
                   if (develop.faker.randomGenerator.boolean())
                     SvgPicture.asset(
                       'assets/icons/badge-check.svg',
@@ -192,12 +186,10 @@ class HomeScreen extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
+                  Gaps.h10,
                   FaIcon(
                     FontAwesomeIcons.ellipsis,
-                    size: 16,
+                    size: Sizes.size16,
                   ),
                 ],
               ),
@@ -218,9 +210,7 @@ class HomeScreen extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-            SizedBox(
-              width: 60,
-            ),
+            Gaps.h60,
             for (var i = 0; i < numOfPictures; i++) ...[
               Container(
                 clipBehavior: Clip.hardEdge,
@@ -230,9 +220,7 @@ class HomeScreen extends StatelessWidget {
                 child: Image.network(
                     "https://picsum.photos/seed/${develop.faker.randomGenerator.numbers(100, 1)[0]}/270/170"),
               ),
-              SizedBox(
-                width: 8,
-              )
+              Gaps.h8,
             ],
           ],
         ),
@@ -243,25 +231,25 @@ class HomeScreen extends StatelessWidget {
   Row makeButtonsForPost() {
     return Row(
       children: [
-        SizedBox(width: 60),
+        Gaps.h60,
         FaIcon(
           FontAwesomeIcons.heart,
-          size: 22,
+          size: Sizes.size24,
         ),
-        SizedBox(width: 10),
+        Gaps.h10,
         FaIcon(
           FontAwesomeIcons.comment,
-          size: 22,
+          size: Sizes.size24,
         ),
-        SizedBox(width: 10),
+        Gaps.h10,
         FaIcon(
           FontAwesomeIcons.retweet,
-          size: 22,
+          size: Sizes.size24,
         ),
-        SizedBox(width: 10),
+        Gaps.h10,
         FaIcon(
           FontAwesomeIcons.paperPlane,
-          size: 22,
+          size: Sizes.size24,
         ),
       ],
     );
@@ -434,9 +422,7 @@ class HomeScreen extends StatelessWidget {
     return Row(
       children: [
         makeRepliesImg(replies > 3 ? 3 : replies),
-        SizedBox(
-          width: 5,
-        ),
+        Gaps.h5,
         Text(
           "$replies replies ・ $likes likes",
           style: TextStyle(

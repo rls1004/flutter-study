@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:threads_clone/constants/sizes.dart';
 
 class NothingScreen extends StatelessWidget {
   const NothingScreen({super.key});
@@ -13,7 +14,7 @@ class NothingScreen extends StatelessWidget {
             backgroundColor: Colors.white,
             title: FaIcon(
               FontAwesomeIcons.threads,
-              size: 40,
+              size: Sizes.size40,
               color: Colors.black,
             ),
           ),
