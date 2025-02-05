@@ -34,6 +34,11 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  getUrl(int width, [int? height]) => develop.faker.image.loremPicsum(
+      width: width,
+      height: height ?? width,
+      random: develop.faker.randomGenerator.numbers(100, 1)[0]);
+
   Widget getPost(int i) {
     List<int> randomNumber = develop.faker.randomGenerator.numbers(300, 2);
     int replies = randomNumber[0];
@@ -98,52 +103,41 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Padding makeAuthorProfile() {
+  Padding makeAuthorProfile({bool withPlusButton = true}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
           Positioned(
-            child: Container(
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(45),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    spreadRadius: 0.3,
-                    blurRadius: 0,
-                  ),
-                ],
-              ),
-              child: Image.network(
-                  "https://picsum.photos/seed/${develop.faker.randomGenerator.numbers(100, 1)[0]}/40"),
+            child: CircleAvatar(
+              radius: 20,
+              backgroundImage: NetworkImage(getUrl(40)),
             ),
           ),
-          Positioned(
-            bottom: 0,
-            left: 25,
-            child: Container(
-              width: 20,
-              height: 20,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(45),
+          if (withPlusButton)
+            Positioned(
+              bottom: 0,
+              left: 27,
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
                   border: Border.all(
                     color: Colors.white,
                     width: 1.5,
-                  )),
-              child: Center(
-                child: FaIcon(
-                  FontAwesomeIcons.plus,
-                  color: Colors.white,
-                  size: Sizes.size10,
+                  ),
+                ),
+                child: CircleAvatar(
+                  radius: 8,
+                  backgroundColor: Colors.black,
+                  child: FaIcon(
+                    FontAwesomeIcons.plus,
+                    color: Colors.white,
+                    size: Sizes.size10,
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );
@@ -217,8 +211,7 @@ class HomeScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Image.network(
-                    "https://picsum.photos/seed/${develop.faker.randomGenerator.numbers(100, 1)[0]}/270/170"),
+                child: Image.network(getUrl(270, 170)),
               ),
               Gaps.h8,
             ],
@@ -260,18 +253,17 @@ class HomeScreen extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.all(12),
         child: Container(
-          clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(45),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                spreadRadius: 0.3,
-                blurRadius: 0,
-              ),
-            ],
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: Colors.black.withOpacity(0.3),
+              width: 0.3,
+            ),
           ),
-          child: Image.network("https://picsum.photos/30"),
+          child: CircleAvatar(
+            radius: 15,
+            backgroundImage: NetworkImage(getUrl(30)),
+          ),
         ),
       );
     } else if (num == 2) {
@@ -283,62 +275,46 @@ class HomeScreen extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               Positioned(
-                top: 10,
+                top: 15,
                 left: 10,
                 child: Container(
-                  clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(45),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
-                        spreadRadius: 0.3,
-                        blurRadius: 0,
-                      ),
-                    ],
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.black.withOpacity(0.3),
+                      width: 0.3,
+                    ),
                   ),
-                  child: Image.network(
-                      "https://picsum.photos/id/${develop.faker.randomGenerator.decimal(scale: 50, min: 0).round()}/20"),
-                ),
-              ),
-              Positioned(
-                top: 10,
-                left: 25,
-                child: Container(
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(45),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.white,
-                        spreadRadius: 3,
-                        blurRadius: 0,
-                      ),
-                    ],
-                  ),
-                  child: SizedBox(
-                    width: 20,
-                    height: 20,
+                  child: CircleAvatar(
+                    radius: 10,
+                    backgroundImage: NetworkImage(getUrl(10)),
                   ),
                 ),
               ),
               Positioned(
-                top: 10,
+                top: 12,
                 left: 25,
                 child: Container(
-                  clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(45),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
-                        spreadRadius: 0.3,
-                        blurRadius: 0,
-                      ),
-                    ],
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 3,
+                    ),
                   ),
-                  child: Image.network(
-                      "https://picsum.photos/id/${develop.faker.randomGenerator.decimal(scale: 50, min: 0).round()}/20"),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.black.withOpacity(0.3),
+                        width: 0.3,
+                      ),
+                    ),
+                    child: CircleAvatar(
+                      radius: 10,
+                      backgroundImage: NetworkImage(getUrl(10)),
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -353,58 +329,54 @@ class HomeScreen extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             Positioned(
+              top: 13,
               left: 8,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Container(
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(45),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
-                        spreadRadius: 0.3,
-                        blurRadius: 0,
-                      ),
-                    ],
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.black.withOpacity(0.3),
+                    width: 0.3,
                   ),
-                  child: Image.network("https://picsum.photos/id/1/16"),
+                ),
+                child: CircleAvatar(
+                  radius: 8,
+                  backgroundImage: NetworkImage(getUrl(16)),
                 ),
               ),
             ),
             Positioned(
+              top: 5,
               left: 30,
               child: Container(
-                clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(45),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
-                      spreadRadius: 0.3,
-                      blurRadius: 0,
-                    ),
-                  ],
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.black.withOpacity(0.3),
+                    width: 0.3,
+                  ),
                 ),
-                child: Image.network("https://picsum.photos/id/2/20"),
+                child: CircleAvatar(
+                  radius: 10,
+                  backgroundImage: NetworkImage(getUrl(20)),
+                ),
               ),
             ),
             Positioned(
-              top: 23,
+              top: 28,
               left: 25,
               child: Container(
-                clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(45),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
-                      spreadRadius: 0.3,
-                      blurRadius: 0,
-                    ),
-                  ],
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.black.withOpacity(0.3),
+                    width: 0.3,
+                  ),
                 ),
-                child: Image.network("https://picsum.photos/id/3/13"),
+                child: CircleAvatar(
+                  radius: 6.5,
+                  backgroundImage: NetworkImage(getUrl(13)),
+                ),
               ),
             ),
           ],
