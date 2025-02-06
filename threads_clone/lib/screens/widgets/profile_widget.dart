@@ -3,10 +3,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/constants/sizes.dart';
 
 class ProfileWidget extends StatelessWidget {
-  late final String profileUrl;
-  late bool withPlusButton;
-  late double radius;
-  ProfileWidget(
+  final String profileUrl;
+  final bool withPlusButton;
+  final double radius;
+  const ProfileWidget(
       {super.key,
       required this.profileUrl,
       this.withPlusButton = false,

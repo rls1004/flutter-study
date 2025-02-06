@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/constants/gaps.dart';
 import 'package:threads_clone/constants/sizes.dart';
-import 'package:threads_clone/screens/widgets/fake_generator.dart';
+import 'package:threads_clone/utils/fake_generator.dart';
 import 'package:threads_clone/screens/widgets/profile_widget.dart';
 
 class WriteScreen extends StatefulWidget {

@@ -30,7 +30,8 @@ Map<String, Object> generateFakePostData(int seed) {
     "time": time,
     "numOfPhotos": numOfPhotos,
     "author": author,
-    "isVerifiedUser": develop.faker.randomGenerator.boolean()
+    "isVerifiedUser": develop.faker.randomGenerator.boolean(),
+    "contents": develop.faker.lorem.sentences(1)[0],
   };
 }
 
