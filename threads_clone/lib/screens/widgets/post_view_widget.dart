@@ -4,57 +4,52 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/constants/gaps.dart';
 import 'package:threads_clone/constants/sizes.dart';
+import 'package:threads_clone/screens/widgets/bottom_menu_widget.dart';
+import 'package:threads_clone/screens/widgets/fake_generator.dart';
+import 'package:threads_clone/screens/widgets/profile_widget.dart';
 
-class PostViewWidget extends StatelessWidget {
+class PostViewWidget extends StatefulWidget {
   final int index;
   const PostViewWidget({super.key, required this.index});
 
-  getUrl(int width, [int? height]) => develop.faker.image.loremPicsum(
-      width: width,
-      height: height ?? width,
-      random: develop.faker.randomGenerator.numbers(100, 1)[0]);
+  @override
+  State<PostViewWidget> createState() => _PostViewWidgetState();
+}
 
-  Padding makeAuthorProfile({bool withPlusButton = true}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Positioned(
-            child: CircleAvatar(
-              radius: 20,
-              backgroundImage: NetworkImage(getUrl(40)),
-            ),
-          ),
-          if (withPlusButton)
-            Positioned(
-              bottom: 0,
-              left: 27,
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 1.5,
-                  ),
-                ),
-                child: CircleAvatar(
-                  radius: 8,
-                  backgroundColor: Colors.black,
-                  child: FaIcon(
-                    FontAwesomeIcons.plus,
-                    color: Colors.white,
-                    size: Sizes.size10,
-                  ),
-                ),
-              ),
-            ),
-        ],
-      ),
+class _PostViewWidgetState extends State<PostViewWidget> {
+  late Map<String, Object> fakeData;
+  late int replies;
+  late int likes;
+  late String time;
+  late int numOfPhotos;
+
+  late String author;
+  late bool isVerifiedUser;
+
+  @override
+  void initState() {
+    super.initState();
+
+    fakeData = generateFakePostData(widget.index);
+    replies = fakeData["replies"] as int;
+    likes = fakeData["likes"] as int;
+    time = fakeData["time"] as String;
+    numOfPhotos = fakeData["numOfPhotos"] as int;
+
+    author = fakeData["author"] as String;
+    isVerifiedUser = fakeData["isVerifiedUser"] as bool;
+  }
+
+  void _onMenusTap(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => BottomMenuWidget(),
     );
   }
 
-  Expanded representAuthorAndText(String time) {
+  Expanded representAuthorAndText(
+      BuildContext context, String author, bool isVerified, String time) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,13 +61,13 @@ class PostViewWidget extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    develop.faker.person.name(),
+                    author,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   Gaps.h4,
-                  if (develop.faker.randomGenerator.boolean())
+                  if (isVerified)
                     SvgPicture.asset(
                       'assets/icons/badge-check.svg',
                       width: 12,
@@ -92,9 +87,14 @@ class PostViewWidget extends StatelessWidget {
                     ),
                   ),
                   Gaps.h10,
-                  FaIcon(
-                    FontAwesomeIcons.ellipsis,
-                    size: Sizes.size16,
+                  GestureDetector(
+                    onTap: () => _onMenusTap(context),
+                    child: Text(
+                      "•••",
+                      style: TextStyle(
+                        letterSpacing: -2,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -120,9 +120,12 @@ class PostViewWidget extends StatelessWidget {
               Container(
                 clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Image.network(getUrl(270, 170)),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: Colors.black.withOpacity(0.2),
+                      width: 0.5,
+                    )),
+                child: Image.network(getUrl(width: 270, height: 170)),
               ),
               Gaps.h8,
             ],
@@ -135,7 +138,7 @@ class PostViewWidget extends StatelessWidget {
   Row makeButtonsForPost() {
     return Row(
       children: [
-        Gaps.h60,
+        Gaps.h64,
         FaIcon(
           FontAwesomeIcons.heart,
           size: Sizes.size24,
@@ -173,7 +176,7 @@ class PostViewWidget extends StatelessWidget {
           ),
           child: CircleAvatar(
             radius: 15,
-            backgroundImage: NetworkImage(getUrl(30)),
+            backgroundImage: NetworkImage(getUrl(width: 40)),
           ),
         ),
       );
@@ -198,7 +201,7 @@ class PostViewWidget extends StatelessWidget {
                   ),
                   child: CircleAvatar(
                     radius: 10,
-                    backgroundImage: NetworkImage(getUrl(10)),
+                    backgroundImage: NetworkImage(getUrl(width: 40)),
                   ),
                 ),
               ),
@@ -223,7 +226,7 @@ class PostViewWidget extends StatelessWidget {
                     ),
                     child: CircleAvatar(
                       radius: 10,
-                      backgroundImage: NetworkImage(getUrl(10)),
+                      backgroundImage: NetworkImage(getUrl(width: 40)),
                     ),
                   ),
                 ),
@@ -252,7 +255,7 @@ class PostViewWidget extends StatelessWidget {
                 ),
                 child: CircleAvatar(
                   radius: 8,
-                  backgroundImage: NetworkImage(getUrl(16)),
+                  backgroundImage: NetworkImage(getUrl(width: 40)),
                 ),
               ),
             ),
@@ -269,7 +272,7 @@ class PostViewWidget extends StatelessWidget {
                 ),
                 child: CircleAvatar(
                   radius: 10,
-                  backgroundImage: NetworkImage(getUrl(20)),
+                  backgroundImage: NetworkImage(getUrl(width: 40)),
                 ),
               ),
             ),
@@ -286,7 +289,7 @@ class PostViewWidget extends StatelessWidget {
                 ),
                 child: CircleAvatar(
                   radius: 6.5,
-                  backgroundImage: NetworkImage(getUrl(13)),
+                  backgroundImage: NetworkImage(getUrl(width: 40)),
                 ),
               ),
             ),
@@ -316,39 +319,11 @@ class PostViewWidget extends StatelessWidget {
     );
   }
 
-  Map<String, Object> generateFakeData(int seed) {
-    List<int> randomNumber = develop.faker.randomGenerator.numbers(300, 2);
-
-    int replies = randomNumber[0];
-    int likes = randomNumber[1];
-    if (replies % 2 == 0) {
-      replies = develop.faker.randomGenerator.numbers(3, 1)[0];
-    }
-    int randomTime =
-        seed * 6 + develop.faker.randomGenerator.numbers((seed + 1) * 6, 1)[0];
-    String time =
-        randomTime < 60 ? "${randomTime}m" : "${(randomTime / 60).round()}h";
-    int numOfPhotos = develop.faker.randomGenerator.numbers(5, 1)[0];
-
-    return {
-      "replies": replies,
-      "likes": likes,
-      "time": time,
-      "numOfPhotos": numOfPhotos
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
-    Map<String, Object> fakeData = generateFakeData(index);
-    int replies = fakeData["replies"] as int;
-    int likes = fakeData["likes"] as int;
-    String time = fakeData["time"] as String;
-    int numOfPhotos = fakeData["numOfPhotos"] as int;
-
     return Column(
       children: [
-        if (index > 0)
+        if (widget.index > 0)
           Divider(
             color: Colors.black.withOpacity(0.1),
             thickness: 0.7,
@@ -356,9 +331,12 @@ class PostViewWidget extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            makeAuthorProfile(),
+            ProfileWidget(
+              profileUrl: getUrl(width: 60),
+              withPlusButton: true,
+            ),
             Gaps.h6,
-            representAuthorAndText(time)
+            representAuthorAndText(context, author, isVerifiedUser, time)
           ],
         ),
         IntrinsicHeight(
@@ -368,8 +346,8 @@ class PostViewWidget extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: VerticalDivider(
-                    color: Colors.black.withOpacity(0.12),
-                    thickness: 2,
+                    color: Colors.black.withOpacity(0.1),
+                    thickness: 1.5,
                   ),
                 ),
               ),
