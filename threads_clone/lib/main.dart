@@ -17,6 +17,9 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.blueAccent,
+        ),
       ),
       home: MainNavigationScreen(),
     );

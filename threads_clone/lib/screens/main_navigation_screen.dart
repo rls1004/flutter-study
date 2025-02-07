@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/screens/home_screen.dart';
 import 'package:threads_clone/screens/nothing_screen.dart';
+import 'package:threads_clone/screens/search_screen.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
 import 'package:threads_clone/screens/write_screen.dart';
 
@@ -19,7 +20,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    NothingScreen(),
+    SearchScreen(),
     NothingScreen(),
     NothingScreen(),
     NothingScreen(),

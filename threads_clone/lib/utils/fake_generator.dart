@@ -37,24 +37,38 @@ Map<String, Object> generateFakePostData(int seed) {
 
 String generateFakeUserName() {
   int how = develop.faker.randomGenerator.integer(3, min: 0);
+  String userName = "";
 
   switch (how) {
     case 0:
       String personName = develop.faker.person.name();
-      personName = personName.replaceAll(" ", "_");
-      return personName;
+      userName = personName.replaceAll(" ", "_");
 
     case 1:
       List<String> words = develop.faker.lorem.words(2);
-      return words[0] + words[1];
+      userName = words[0] + words[1];
 
     case 2:
-      return develop.faker.lorem.word() + develop.faker.animal.name();
+      userName = develop.faker.lorem.word() + develop.faker.animal.name();
 
     case 3:
-      return develop.faker.color.color() + develop.faker.food.dish();
+      userName = develop.faker.color.color() + develop.faker.food.dish();
 
     default:
-      return "rls1004";
+      userName = "rls1004";
   }
+
+  if (userName.isNotEmpty && userName.length <= 18) return userName;
+  return generateFakeUserName();
+}
+
+Map<String, String> generateFakeUserList() {
+  String userName = generateFakeUserName();
+  String realName = develop.faker.person.name();
+
+  int followersNumber = develop.faker.randomGenerator.numbers(999, 1)[0];
+  String followers = "${followersNumber ~/ 10}";
+  followers += followersNumber % 10 == 0 ? "K" : ".${followersNumber % 10}K";
+
+  return {"userName": userName, "realName": realName, "followers": followers};
 }
