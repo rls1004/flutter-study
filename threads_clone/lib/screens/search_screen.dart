@@ -18,7 +18,9 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    for (var i = 0; i < 30; i++) userList.add(generateFakeUserList());
+    for (var i = 0; i < 30; i++) {
+      userList.add(generateFakeUserList());
+    }
   }
 
   @override
@@ -46,6 +48,7 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       ),
       body: ListView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         children: [
           Gaps.v10,
           for (var userInfo in userList) SearchUserWidget(userInfo: userInfo),
