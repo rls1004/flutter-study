@@ -56,56 +56,9 @@ class _ActivityScreenState extends State<ActivityScreen> {
               ),
             ),
           ),
-          bottom: TabBar(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            tabAlignment: TabAlignment.start,
-            labelPadding: EdgeInsets.all(0),
-            isScrollable: true,
-            dividerColor: Colors.transparent,
-            indicatorColor: Colors.transparent,
-            tabs: [
-              for (var activity in [
-                "All",
-                "Replies",
-                "Mentions",
-                "Follows",
-                "Likes"
-              ])
-                GestureDetector(
-                  onTap: () => onTap(activity),
-                  child: Tab(
-                    height: 35,
-                    child: Container(
-                      margin: EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 3,
-                      ),
-                      width: 100,
-                      height: 35,
-                      decoration: BoxDecoration(
-                        color: selectedActivity == activity
-                            ? Colors.black
-                            : Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: Colors.black.withOpacity(0.3),
-                          width: 0.5,
-                        ),
-                      ),
-                      child: Center(
-                          child: Text(
-                        activity,
-                        style: TextStyle(
-                          color: selectedActivity == activity
-                              ? Colors.white
-                              : Colors.black,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      )),
-                    ),
-                  ),
-                ),
-            ],
+          bottom: ActivityTabBar(
+            selectedActivity: selectedActivity,
+            onTap: onTap,
           ),
         ),
         body: SingleChildScrollView(
@@ -129,6 +82,70 @@ class _ActivityScreenState extends State<ActivityScreen> {
       ),
     );
   }
+}
+
+class ActivityTabBar extends StatelessWidget implements PreferredSizeWidget {
+  final Function onTap;
+
+  const ActivityTabBar({
+    super.key,
+    required this.selectedActivity,
+    required this.onTap,
+  });
+
+  final String selectedActivity;
+
+  @override
+  Widget build(BuildContext context) {
+    return TabBar(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      tabAlignment: TabAlignment.start,
+      labelPadding: EdgeInsets.all(0),
+      isScrollable: true,
+      dividerColor: Colors.transparent,
+      indicatorColor: Colors.transparent,
+      tabs: [
+        for (var activity in ["All", "Replies", "Mentions", "Follows", "Likes"])
+          GestureDetector(
+            onTap: () => onTap(activity),
+            child: Tab(
+              height: 35,
+              child: Container(
+                margin: EdgeInsets.symmetric(
+                  vertical: 0,
+                  horizontal: 3,
+                ),
+                width: 100,
+                height: 35,
+                decoration: BoxDecoration(
+                  color: selectedActivity == activity
+                      ? Colors.black
+                      : Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: Colors.black.withOpacity(0.3),
+                    width: 0.5,
+                  ),
+                ),
+                child: Center(
+                    child: Text(
+                  activity,
+                  style: TextStyle(
+                    color: selectedActivity == activity
+                        ? Colors.white
+                        : Colors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class ActivityTile extends StatelessWidget {

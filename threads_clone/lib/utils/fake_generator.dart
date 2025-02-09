@@ -61,7 +61,7 @@ String generateFakeUserName() {
       userName = "rls1004";
   }
 
-  if (userName.isNotEmpty && userName.length <= 18) return userName;
+  if (userName.isNotEmpty && userName.length <= 15) return userName;
   return generateFakeUserName();
 }
 
