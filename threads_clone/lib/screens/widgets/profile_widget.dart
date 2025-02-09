@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/constants/sizes.dart';
+import 'package:threads_clone/screens/features/activity_info.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String profileUrl;
   final bool withPlusButton;
+
   final double radius;
-  const ProfileWidget(
-      {super.key,
-      required this.profileUrl,
-      this.withPlusButton = false,
-      this.radius = 20});
+  final ActionType? withAction;
+  const ProfileWidget({
+    super.key,
+    required this.profileUrl,
+    this.withPlusButton = false,
+    this.radius = 20,
+    this.withAction,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +56,98 @@ class ProfileWidget extends StatelessWidget {
                   backgroundColor: Colors.black,
                   child: FaIcon(
                     FontAwesomeIcons.plus,
+                    color: Colors.white,
+                    size: Sizes.size10,
+                  ),
+                ),
+              ),
+            ),
+          if (withAction == ActionType.mention)
+            Positioned(
+              bottom: 0,
+              left: 27,
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 1.5,
+                  ),
+                ),
+                child: CircleAvatar(
+                  radius: 8,
+                  backgroundColor: Colors.lightGreen,
+                  child: FaIcon(
+                    FontAwesomeIcons.at,
+                    color: Colors.white,
+                    size: Sizes.size10,
+                  ),
+                ),
+              ),
+            ),
+          if (withAction == ActionType.reply)
+            Positioned(
+              bottom: 0,
+              left: 27,
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 1.5,
+                  ),
+                ),
+                child: CircleAvatar(
+                  radius: 8,
+                  backgroundColor: Colors.lightBlue,
+                  child: FaIcon(
+                    FontAwesomeIcons.reply,
+                    color: Colors.white,
+                    size: Sizes.size10,
+                  ),
+                ),
+              ),
+            ),
+          if (withAction == ActionType.follow)
+            Positioned(
+              bottom: 0,
+              left: 27,
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 1.5,
+                  ),
+                ),
+                child: CircleAvatar(
+                  radius: 8,
+                  backgroundColor: Colors.deepPurple,
+                  child: FaIcon(
+                    FontAwesomeIcons.solidUser,
+                    color: Colors.white,
+                    size: Sizes.size10,
+                  ),
+                ),
+              ),
+            ),
+          if (withAction == ActionType.like)
+            Positioned(
+              bottom: 0,
+              left: 27,
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 1.5,
+                  ),
+                ),
+                child: CircleAvatar(
+                  radius: 8,
+                  backgroundColor: Colors.pinkAccent,
+                  child: FaIcon(
+                    FontAwesomeIcons.solidHeart,
                     color: Colors.white,
                     size: Sizes.size10,
                   ),

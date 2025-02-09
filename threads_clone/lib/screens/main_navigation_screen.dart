@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:threads_clone/screens/activity_screen.dart';
 import 'package:threads_clone/screens/home_screen.dart';
 import 'package:threads_clone/screens/nothing_screen.dart';
 import 'package:threads_clone/screens/search_screen.dart';
@@ -22,7 +23,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     HomeScreen(),
     SearchScreen(),
     NothingScreen(),
-    NothingScreen(),
+    ActivityScreen(),
     NothingScreen(),
   ];
 
@@ -78,7 +79,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           BottomNavigationBarItem(
             icon: FaIcon(
-              FontAwesomeIcons.heart,
+              _selectedIndex == 3
+                  ? FontAwesomeIcons.solidHeart
+                  : FontAwesomeIcons.heart,
             ),
             label: "heart",
           ),

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:threads_clone/constants/gaps.dart';
 import 'package:threads_clone/constants/sizes.dart';
+import 'package:threads_clone/screens/features/search_info.dart';
 import 'package:threads_clone/screens/widgets/profile_widget.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
 
 class SearchUserWidget extends StatefulWidget {
-  final Map<String, String> userInfo;
+  final SearchInfo userInfo;
   const SearchUserWidget({super.key, required this.userInfo});
 
   @override
@@ -16,9 +17,9 @@ class SearchUserWidget extends StatefulWidget {
 class _SearchUserWidgetState extends State<SearchUserWidget> {
   @override
   Widget build(BuildContext context) {
-    String userName = widget.userInfo["userName"]!;
-    String realName = widget.userInfo["realName"]!;
-    String followers = widget.userInfo["followers"]!;
+    String userName = widget.userInfo.userName;
+    String realName = widget.userInfo.realName;
+    String followers = widget.userInfo.followersToString();
     String profileUrl = getUrl(width: 50, seed: userName);
 
     return ListTile(

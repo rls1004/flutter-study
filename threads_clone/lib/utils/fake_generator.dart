@@ -1,4 +1,9 @@
+import 'dart:math';
+
 import 'package:faker/faker.dart' as develop;
+import 'package:flutter/material.dart';
+import 'package:threads_clone/screens/features/activity_info.dart';
+import 'package:threads_clone/screens/features/search_info.dart';
 
 getUrl({required int width, int? height, String? seed}) =>
     develop.faker.image.loremPicsum(
@@ -62,13 +67,38 @@ String generateFakeUserName() {
   return generateFakeUserName();
 }
 
-Map<String, String> generateFakeUserList() {
+SearchInfo generateFakeUserList() {
   String userName = generateFakeUserName();
   String realName = develop.faker.person.name();
 
   int followersNumber = develop.faker.randomGenerator.numbers(999, 1)[0];
-  String followers = "${followersNumber ~/ 10}";
-  followers += followersNumber % 10 == 0 ? "K" : ".${followersNumber % 10}K";
 
-  return {"userName": userName, "realName": realName, "followers": followers};
+  return SearchInfo(userName, realName, followersNumber);
+}
+
+ActionInfo generateFakeActivity() {
+  String name = generateFakeUserName();
+  List<ActionType> actionList = [
+    ActionType.reply,
+    ActionType.mention,
+    ActionType.follow,
+    ActionType.like
+  ];
+  ActionType act = actionList[Random().nextInt(4)];
+
+  String describe = develop.faker.lorem.sentence();
+  String actDescribe = develop.faker.lorem.sentence();
+  if (act == ActionType.follow || act == ActionType.like) {
+    actDescribe = "";
+  }
+
+  int time = develop.faker.randomGenerator.integer(24 * 60);
+
+  return ActionInfo(
+    name,
+    act,
+    describe: describe,
+    actDescribe: actDescribe,
+    time: time,
+  );
 }
