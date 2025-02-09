@@ -1,7 +1,5 @@
 import 'dart:math';
-
 import 'package:faker/faker.dart' as develop;
-import 'package:flutter/material.dart';
 import 'package:threads_clone/screens/features/activity_info.dart';
 import 'package:threads_clone/screens/features/search_info.dart';
 
