@@ -15,27 +15,22 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-
     return SafeArea(
-      child: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: Colors.white,
-            title: FaIcon(
-              FontAwesomeIcons.threads,
-              size: Sizes.size40,
-              color: Colors.black,
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => ListTile(
-                title: PostCardWidget(index: index),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              backgroundColor: Colors.white,
+              title: FaIcon(
+                FontAwesomeIcons.threads,
+                size: Sizes.size40,
+                color: Colors.black,
               ),
-              childCount: 15,
             ),
-          ),
-        ],
+            SliverList.list(children: getThreads("")),
+          ],
+        ),
       ),
     );
   }

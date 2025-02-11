@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/screens/activity_screen.dart';
 import 'package:threads_clone/screens/home_screen.dart';
 import 'package:threads_clone/screens/nothing_screen.dart';
+import 'package:threads_clone/screens/profile_screen.dart';
 import 'package:threads_clone/screens/search_screen.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
 import 'package:threads_clone/screens/write_screen.dart';
@@ -24,7 +25,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     SearchScreen(),
     NothingScreen(),
     ActivityScreen(),
-    NothingScreen(),
+    ProfileScreen(userName: "Jane"),
   ];
 
   void _onTap(BuildContext context, int index) {
@@ -87,7 +88,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           BottomNavigationBarItem(
             icon: FaIcon(
-              FontAwesomeIcons.user,
+              _selectedIndex == 4
+                  ? FontAwesomeIcons.solidUser
+                  : FontAwesomeIcons.user,
             ),
             label: "Home",
           ),
