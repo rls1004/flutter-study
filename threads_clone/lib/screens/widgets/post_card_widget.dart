@@ -158,7 +158,11 @@ class ReactionInfos extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        RepliesImageWidget(num: replies),
+        SizedBox(
+          width: 60,
+          height: 50,
+          child: Center(child: RepliesImageWidget(num: replies)),
+        ),
         Gaps.h5,
         Text(
           "$replies replies ・ $likes likes",
