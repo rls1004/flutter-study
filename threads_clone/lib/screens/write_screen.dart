@@ -11,6 +11,10 @@ import 'package:threads_clone/utils/fake_generator.dart';
 import 'package:threads_clone/screens/widgets/profile_widget.dart';
 import 'package:video_player/video_player.dart';
 
+bool isIMG(XFile file) =>
+    file.name.endsWith(".jpg") || file.name.endsWith(".png");
+bool isMP4(XFile file) => file.name.endsWith(".mp4");
+
 class WriteScreen extends StatefulWidget {
   final String userName;
   const WriteScreen({super.key, required this.userName});
@@ -32,42 +36,34 @@ class _WriteScreenState extends State<WriteScreen> {
 
   late VideoPlayerController _videoPlayerController;
 
-  bool isIMG(XFile file) =>
-      file.name.endsWith(".jpg") || file.name.endsWith(".png");
-  bool isMP4(XFile file) => file.name.endsWith(".mp4");
-
   void onAttachmentTap() async {
     isRecorded = false;
     isVideoReady = false;
     isImageReady = false;
     setState(() {});
 
-    void getFile(XFile recordedFile) {
-      resultFile = recordedFile;
-      isRecorded = true;
-      setState(() {});
-    }
-
-    Navigator.of(context)
-        .push(
+    final result = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => CameraScreen(getFile: getFile),
+        builder: (context) => CameraScreen(),
       ),
-    )
-        .whenComplete(() async {
-      if (isRecorded && isMP4(resultFile)) {
+    );
+
+    if (result != null) {
+      isRecorded = true;
+      resultFile = result;
+      if (isMP4(result)) {
         _videoPlayerController =
             VideoPlayerController.file(File(resultFile.path));
         await _videoPlayerController.initialize();
         await _videoPlayerController.setLooping(true);
         await _videoPlayerController.play();
         isVideoReady = true;
-        setState(() {});
-      } else if (isRecorded && isIMG(resultFile)) {
+      } else if (isIMG(result)) {
         isImageReady = true;
-        setState(() {});
       }
-    });
+    }
+
+    setState(() {});
   }
 
   void _onChange(String value) {

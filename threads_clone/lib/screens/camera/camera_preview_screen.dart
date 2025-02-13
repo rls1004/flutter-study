@@ -5,18 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:threads_clone/utils/sizes.dart';
 import 'package:video_player/video_player.dart';
 
+bool isIMG(XFile file) =>
+    file.name.endsWith(".jpg") || file.name.endsWith(".png");
+bool isMP4(XFile file) => file.name.endsWith(".mp4");
+
 class CameraPreviewScreen extends StatefulWidget {
   final XFile file;
-  final Function setConfirm;
-  final bool isCapture;
-  final bool isVideo;
 
-  const CameraPreviewScreen(
-      {super.key,
-      required this.file,
-      this.isCapture = false,
-      this.isVideo = false,
-      required this.setConfirm});
+  const CameraPreviewScreen({
+    super.key,
+    required this.file,
+  });
 
   @override
   State<CameraPreviewScreen> createState() => _CameraPreviewScreenState();
@@ -26,13 +25,10 @@ class _CameraPreviewScreenState extends State<CameraPreviewScreen> {
   late final VideoPlayerController _videoPlayerController;
 
   Future<void> _initVideo() async {
-    if (widget.isVideo) {
-      _videoPlayerController =
-          VideoPlayerController.file(File(widget.file.path));
-      await _videoPlayerController.initialize();
-      await _videoPlayerController.setLooping(true);
-      await _videoPlayerController.play();
-    } else if (widget.isCapture) {}
+    _videoPlayerController = VideoPlayerController.file(File(widget.file.path));
+    await _videoPlayerController.initialize();
+    await _videoPlayerController.setLooping(true);
+    await _videoPlayerController.play();
 
     setState(() {});
   }
@@ -40,12 +36,12 @@ class _CameraPreviewScreenState extends State<CameraPreviewScreen> {
   @override
   void initState() {
     super.initState();
-    _initVideo();
+    if (isMP4(widget.file)) _initVideo();
   }
 
   @override
   void dispose() {
-    if (widget.isVideo) _videoPlayerController.dispose();
+    if (isMP4(widget.file)) _videoPlayerController.dispose();
     super.dispose();
   }
 
@@ -66,11 +62,11 @@ class _CameraPreviewScreenState extends State<CameraPreviewScreen> {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
-                    child: widget.isVideo
+                    child: isMP4(widget.file)
                         ? _videoPlayerController.value.isInitialized
                             ? VideoPlayer(_videoPlayerController)
                             : null
-                        : widget.isCapture
+                        : isIMG(widget.file)
                             ? Image.file(File(widget.file.path))
                             : Container(),
                   ),
@@ -102,7 +98,7 @@ class PreviewBottomBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            onTap: () => Navigator.pop(context),
+            onTap: () => Navigator.of(context).pop(),
             child: Text(
               "다시 찍기",
               style: TextStyle(
@@ -112,10 +108,7 @@ class PreviewBottomBar extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () {
-              widget.setConfirm(true);
-              Navigator.pop(context);
-            },
+            onTap: () => Navigator.of(context).pop(widget.file),
             child: Text(
               "사용 하기",
               style: TextStyle(

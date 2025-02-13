@@ -7,8 +7,7 @@ import 'package:threads_clone/utils/sizes.dart';
 import 'package:threads_clone/screens/camera/camera_preview_screen.dart';
 
 class CameraScreen extends StatefulWidget {
-  final Function getFile;
-  const CameraScreen({super.key, required this.getFile});
+  const CameraScreen({super.key});
 
   @override
   State<CameraScreen> createState() => _CameraScreenState();
@@ -20,8 +19,6 @@ class _CameraScreenState extends State<CameraScreen>
   bool _isInitialized = false;
   bool _isSelfieMode = false;
   int _currentFlashMode = 0;
-
-  bool _isConfirmed = false;
 
   final List<FlashMode> _flashModes = [
     FlashMode.auto,
@@ -85,11 +82,6 @@ class _CameraScreenState extends State<CameraScreen>
     }
   }
 
-  void setConfirm(value) {
-    _isConfirmed = value;
-    setState(() {});
-  }
-
   @override
   void initState() {
     super.initState();
@@ -124,20 +116,15 @@ class _CameraScreenState extends State<CameraScreen>
     XFile file = await _cameraController.takePicture();
 
     if (!mounted) return;
-    Navigator.of(context)
-        .push(MaterialPageRoute(
-            builder: (context) => CameraPreviewScreen(
-                  file: file,
-                  setConfirm: setConfirm,
-                  isCapture: true,
-                )))
-        .whenComplete(() {
-      if (_isConfirmed) {
-        widget.getFile(file);
-        if (!mounted) return;
-        Navigator.of(context).pop();
-      }
-    });
+    final result = await Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => CameraPreviewScreen(
+              file: file,
+            )));
+
+    if (result != null) {
+      if (!mounted) return;
+      Navigator.of(context).pop(result);
+    }
   }
 
   Future<void> _startRecording() async {
@@ -158,22 +145,17 @@ class _CameraScreenState extends State<CameraScreen>
     final XFile file = await _cameraController.stopVideoRecording();
 
     if (!mounted) return;
-    Navigator.of(context)
-        .push(
+    final result = await Navigator.of(context).push(
       MaterialPageRoute(
           builder: (context) => CameraPreviewScreen(
                 file: file,
-                setConfirm: setConfirm,
-                isVideo: true,
               )),
-    )
-        .whenComplete(() {
-      if (_isConfirmed) {
-        widget.getFile(file);
-        if (!mounted) return;
-        Navigator.of(context).pop();
-      }
-    });
+    );
+
+    if (result != null) {
+      if (!mounted) return;
+      Navigator.of(context).pop(result);
+    }
   }
 
   @override
@@ -188,11 +170,8 @@ class _CameraScreenState extends State<CameraScreen>
     final file = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (file == null) return;
 
-    _isConfirmed = true;
-    widget.getFile(file);
-
     if (!mounted) return;
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(file);
   }
 
   @override
