@@ -5,7 +5,7 @@ enum ActionType {
   like,
 }
 
-class ActionInfo {
+class ActionModel {
   late String name;
   late ActionType act;
   late String describe;
@@ -13,7 +13,7 @@ class ActionInfo {
   late String profileUrl;
   late int time;
 
-  ActionInfo(this.name, this.act,
+  ActionModel(this.name, this.act,
       {this.describe = "", this.actDescribe = "", this.time = 0}) {
     switch (act) {
       case ActionType.reply:

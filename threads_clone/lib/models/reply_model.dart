@@ -1,12 +1,12 @@
-import 'package:threads_clone/screens/features/post_info.dart';
+import 'package:threads_clone/models/post_model.dart';
 
-class ReplyInfo {
-  PostInfo postInfo;
+class ReplyModel {
+  PostModel postInfo;
   String userName;
   String comment;
   int time;
 
-  ReplyInfo({
+  ReplyModel({
     required this.postInfo,
     required this.userName,
     required this.comment,

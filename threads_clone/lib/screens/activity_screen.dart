@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:threads_clone/constants/gaps.dart';
-import 'package:threads_clone/constants/sizes.dart';
-import 'package:threads_clone/screens/features/activity_info.dart';
+import 'package:threads_clone/utils/gaps.dart';
+import 'package:threads_clone/utils/sizes.dart';
+import 'package:threads_clone/models/activity_model.dart';
 import 'package:threads_clone/screens/widgets/profile_widget.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
 
@@ -14,7 +14,7 @@ class ActivityScreen extends StatefulWidget {
 
 class _ActivityScreenState extends State<ActivityScreen> {
   String selectedActivity = "All";
-  List<ActionInfo> activities = [];
+  List<ActionModel> activities = [];
 
   @override
   void initState() {
@@ -154,7 +154,7 @@ class ActivityTile extends StatelessWidget {
     required this.activity,
   });
 
-  final ActionInfo activity;
+  final ActionModel activity;
 
   @override
   Widget build(BuildContext context) {

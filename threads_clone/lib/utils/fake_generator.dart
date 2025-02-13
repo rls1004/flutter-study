@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'package:faker/faker.dart' as develop;
-import 'package:threads_clone/screens/features/activity_info.dart';
-import 'package:threads_clone/screens/features/post_info.dart';
-import 'package:threads_clone/screens/features/reply_info.dart';
-import 'package:threads_clone/screens/features/search_info.dart';
+import 'package:threads_clone/models/activity_model.dart';
+import 'package:threads_clone/models/post_model.dart';
+import 'package:threads_clone/models/reply_model.dart';
+import 'package:threads_clone/models/search_model.dart';
 
 getUrl({required int width, int? height, String? seed}) =>
     develop.faker.image.loremPicsum(
@@ -13,7 +13,7 @@ getUrl({required int width, int? height, String? seed}) =>
       random: seed?.length ?? develop.faker.randomGenerator.numbers(100, 1)[0],
     );
 
-PostInfo generateFakePostData(String userName) {
+PostModel generateFakePostData(String userName) {
   List<int> randomNumber = develop.faker.randomGenerator.numbers(300, 2);
 
   int replies = randomNumber[0];
@@ -30,7 +30,7 @@ PostInfo generateFakePostData(String userName) {
   bool isVerifiedUser = [true, false][author.hashCode % 2];
   String contents = develop.faker.lorem.sentences(1)[0];
 
-  return PostInfo(
+  return PostModel(
       replies: replies,
       likes: likes,
       time: time,
@@ -67,16 +67,16 @@ String generateFakeUserName() {
   return generateFakeUserName();
 }
 
-SearchInfo generateFakeUserList() {
+SearchModel generateFakeUserList() {
   String userName = generateFakeUserName();
   String realName = develop.faker.person.name();
 
   int followersNumber = develop.faker.randomGenerator.numbers(999, 1)[0];
 
-  return SearchInfo(userName, realName, followersNumber);
+  return SearchModel(userName, realName, followersNumber);
 }
 
-ActionInfo generateFakeActivity() {
+ActionModel generateFakeActivity() {
   String name = generateFakeUserName();
   List<ActionType> actionList = [
     ActionType.reply,
@@ -94,7 +94,7 @@ ActionInfo generateFakeActivity() {
 
   int time = develop.faker.randomGenerator.integer(24 * 60);
 
-  return ActionInfo(
+  return ActionModel(
     name,
     act,
     describe: describe,
@@ -103,12 +103,12 @@ ActionInfo generateFakeActivity() {
   );
 }
 
-ReplyInfo generateFakeReply(String userName) {
-  PostInfo fakePost = generateFakePostData("");
+ReplyModel generateFakeReply(String userName) {
+  PostModel fakePost = generateFakePostData("");
   String comment = develop.faker.lorem.sentences(1)[0];
   int time = develop.faker.randomGenerator.numbers(60 * 24, 1)[0];
 
-  return ReplyInfo(
+  return ReplyModel(
       postInfo: fakePost,
       userName: userName.isEmpty ? generateFakeUserName() : userName,
       comment: comment,

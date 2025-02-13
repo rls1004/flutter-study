@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:threads_clone/constants/sizes.dart';
+import 'package:threads_clone/utils/sizes.dart';
 import 'package:video_player/video_player.dart';
 
 class CameraPreviewScreen extends StatefulWidget {

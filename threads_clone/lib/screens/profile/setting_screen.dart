@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:threads_clone/constants/gaps.dart';
-import 'package:threads_clone/constants/sizes.dart';
+import 'package:threads_clone/utils/gaps.dart';
+import 'package:threads_clone/utils/sizes.dart';
 
 class SettingScreen extends StatelessWidget {
   final Function onTapBack;

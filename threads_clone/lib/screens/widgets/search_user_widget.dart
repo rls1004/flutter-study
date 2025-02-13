@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:threads_clone/constants/gaps.dart';
-import 'package:threads_clone/constants/sizes.dart';
-import 'package:threads_clone/screens/features/search_info.dart';
+import 'package:threads_clone/utils/gaps.dart';
+import 'package:threads_clone/utils/sizes.dart';
+import 'package:threads_clone/models/search_model.dart';
 import 'package:threads_clone/screens/widgets/profile_widget.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
 
 class SearchUserWidget extends StatefulWidget {
-  final SearchInfo userInfo;
+  final SearchModel userInfo;
   const SearchUserWidget({super.key, required this.userInfo});
 
   @override

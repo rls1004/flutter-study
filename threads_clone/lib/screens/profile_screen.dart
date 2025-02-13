@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:threads_clone/constants/gaps.dart';
-import 'package:threads_clone/constants/sizes.dart';
-import 'package:threads_clone/screens/privacy_screen.dart';
-import 'package:threads_clone/screens/setting_screen.dart';
+import 'package:threads_clone/utils/gaps.dart';
+import 'package:threads_clone/utils/sizes.dart';
+import 'package:threads_clone/screens/profile/privacy_screen.dart';
+import 'package:threads_clone/screens/profile/setting_screen.dart';
 import 'package:threads_clone/screens/widgets/post_card_widget.dart';
 import 'package:threads_clone/screens/widgets/profile_widget.dart';
 import 'package:threads_clone/screens/widgets/replies_image_widget.dart';

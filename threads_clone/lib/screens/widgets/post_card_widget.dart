@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:threads_clone/constants/gaps.dart';
-import 'package:threads_clone/constants/sizes.dart';
-import 'package:threads_clone/screens/features/post_info.dart';
-import 'package:threads_clone/screens/features/reply_info.dart';
+import 'package:threads_clone/utils/gaps.dart';
+import 'package:threads_clone/utils/sizes.dart';
+import 'package:threads_clone/models/post_model.dart';
+import 'package:threads_clone/models/reply_model.dart';
 import 'package:threads_clone/screens/widgets/photo_list_widget.dart';
 import 'package:threads_clone/screens/widgets/replies_image_widget.dart';
 import 'package:threads_clone/screens/widgets/text_contents_widget.dart';
@@ -12,8 +12,8 @@ import 'package:threads_clone/screens/widgets/profile_widget.dart';
 
 class PostCardWidget extends StatefulWidget {
   final String userName;
-  final PostInfo postData;
-  final ReplyInfo? replyData;
+  final PostModel postData;
+  final ReplyModel? replyData;
 
   const PostCardWidget(
       {super.key, this.userName = "", required this.postData, this.replyData});
@@ -151,7 +151,7 @@ class ReactionButtons extends StatelessWidget {
 }
 
 class ReactionInfos extends StatelessWidget {
-  final ReplyInfo? reply;
+  final ReplyModel? reply;
   const ReactionInfos({
     super.key,
     required this.replies,

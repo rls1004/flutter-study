@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:threads_clone/constants/gaps.dart';
+import 'package:threads_clone/utils/gaps.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
 
 class PhotoListWidget extends StatelessWidget {

@@ -1,4 +1,4 @@
-class PostInfo {
+class PostModel {
   late int replies;
   late int likes;
   late int time;
@@ -9,7 +9,7 @@ class PostInfo {
 
   late String contents;
 
-  PostInfo(
+  PostModel(
       {required this.replies,
       required this.likes,
       required this.time,
