@@ -54,11 +54,13 @@ class TextContentsWidget extends StatelessWidget {
               Spacer(),
               Row(
                 children: [
-                  Text(
-                    time,
-                    style: TextStyle(
-                      color: Colors.black.withOpacity(0.4),
-                      fontWeight: FontWeight.w500,
+                  Opacity(
+                    opacity: 0.4,
+                    child: Text(
+                      time,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                   Gaps.h10,

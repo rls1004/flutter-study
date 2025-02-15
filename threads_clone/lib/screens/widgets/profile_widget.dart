@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/utils/sizes.dart';
 import 'package:threads_clone/models/activity_model.dart';
+import 'package:threads_clone/utils/utils.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String profileUrl;
@@ -47,16 +48,17 @@ class ProfileWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Colors.white,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     width: 1.5,
                   ),
                 ),
                 child: CircleAvatar(
                   radius: 8,
-                  backgroundColor: Colors.black,
+                  backgroundColor:
+                      isDarkMode(context) ? Colors.white : Colors.black,
                   child: FaIcon(
                     FontAwesomeIcons.plus,
-                    color: Colors.white,
+                    color: isDarkMode(context) ? Colors.black : Colors.white,
                     size: Sizes.size10,
                   ),
                 ),
@@ -70,7 +72,7 @@ class ProfileWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Colors.white,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     width: 1.5,
                   ),
                 ),
@@ -93,7 +95,7 @@ class ProfileWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Colors.white,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     width: 1.5,
                   ),
                 ),
@@ -116,7 +118,7 @@ class ProfileWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Colors.white,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     width: 1.5,
                   ),
                 ),
@@ -139,7 +141,7 @@ class ProfileWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Colors.white,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     width: 1.5,
                   ),
                 ),

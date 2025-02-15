@@ -39,7 +39,6 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
       ),
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(
           Sizes.size20,
         ),
@@ -220,40 +219,40 @@ class _BottomMenuWidgetState extends State<BottomMenuWidget> {
                                 ),
                               ),
                               Gaps.v6,
-                              Text(
-                                "Your report is anonymous, except if you're reporting an intellectual property infringement. If someone is in immediate danger, call the local emergency services - don't wait.",
-                                style: TextStyle(
-                                  fontSize: Sizes.size14,
-                                  letterSpacing: -0.5,
-                                  color: Colors.black.withOpacity(0.4),
+                              Opacity(
+                                opacity: 0.5,
+                                child: Text(
+                                  "Your report is anonymous, except if you're reporting an intellectual property infringement. If someone is in immediate danger, call the local emergency services - don't wait.",
+                                  style: TextStyle(
+                                    fontSize: Sizes.size14,
+                                    letterSpacing: -0.5,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        for (var reason in reportReasons)
-                          Container(
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  top: BorderSide(
-                                    color: Colors.black.withOpacity(0.4),
-                                    width: 0.4,
-                                  ),
-                                ),
+                        for (var reason in reportReasons) ...[
+                          Divider(
+                            thickness: 0.5,
+                            height: 0,
+                          ),
+                          ListTile(
+                            title: Text(
+                              reason,
+                              style: TextStyle(
+                                fontSize: Sizes.size14,
                               ),
-                              child: ListTile(
-                                title: Text(
-                                  reason,
-                                  style: TextStyle(
-                                    fontSize: Sizes.size14,
-                                  ),
-                                ),
-                                trailing: FaIcon(
-                                  FontAwesomeIcons.chevronRight,
-                                  size: Sizes.size14,
-                                  color: Colors.black.withOpacity(0.4),
-                                ),
-                              )),
+                            ),
+                            trailing: Opacity(
+                              opacity: 0.5,
+                              child: FaIcon(
+                                FontAwesomeIcons.chevronRight,
+                                size: Sizes.size14,
+                              ),
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ],

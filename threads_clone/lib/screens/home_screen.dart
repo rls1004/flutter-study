@@ -21,11 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
-              backgroundColor: Colors.white,
               title: FaIcon(
                 FontAwesomeIcons.threads,
                 size: Sizes.size40,
-                color: Colors.black,
               ),
             ),
             SliverList.list(children: getThreads("")),

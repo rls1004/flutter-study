@@ -9,6 +9,7 @@ import 'package:threads_clone/screens/widgets/profile_widget.dart';
 import 'package:threads_clone/screens/widgets/replies_image_widget.dart';
 import 'package:threads_clone/screens/widgets/reply_widget.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
+import 'package:threads_clone/utils/utils.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String userName;
@@ -106,11 +107,17 @@ class ProfileHome extends StatelessWidget {
                 pinned: true,
                 delegate: _StickyHeaderDelegate(
                   child: Container(
-                    color: Colors.white,
                     alignment: Alignment.center,
                     child: TabBar(
-                      indicatorColor: Colors.black,
+                      dividerColor: Colors.grey,
+                      indicatorColor:
+                          isDarkMode(context) ? Colors.white : Colors.black,
                       indicatorSize: TabBarIndicatorSize.tab,
+                      labelColor:
+                          isDarkMode(context) ? Colors.white : Colors.black,
+                      unselectedLabelColor: isDarkMode(context)
+                          ? Colors.white.withOpacity(0.5)
+                          : Colors.black.withOpacity(0.5),
                       tabs: [
                         Tab(
                           child: Text("Threads"),
@@ -153,7 +160,6 @@ class ProfileAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: Colors.white,
       collapsedHeight: 220,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.zero,
@@ -205,20 +211,22 @@ class ProfileAppBar extends StatelessWidget {
                           ),
                         ),
                         Gaps.h10,
-                        Container(
-                          width: 83,
-                          height: 20,
-                          clipBehavior: Clip.hardEdge,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.black.withOpacity(0.05),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "threads.net",
-                              style: TextStyle(
-                                fontSize: Sizes.size14,
-                                color: Colors.black.withOpacity(0.4),
+                        Opacity(
+                          opacity: 0.5,
+                          child: Container(
+                            width: 83,
+                            height: 20,
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.grey.withOpacity(0.5),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "threads.net",
+                                style: TextStyle(
+                                  fontSize: Sizes.size14,
+                                ),
                               ),
                             ),
                           ),
@@ -244,11 +252,13 @@ class ProfileAppBar extends StatelessWidget {
               children: [
                 RepliesImageWidget(num: 2),
                 Gaps.h5,
-                Text(
-                  "2 followers",
-                  style: TextStyle(
-                    fontSize: Sizes.size16,
-                    color: Colors.black.withOpacity(0.3),
+                Opacity(
+                  opacity: 0.3,
+                  child: Text(
+                    "2 followers",
+                    style: TextStyle(
+                      fontSize: Sizes.size16,
+                    ),
                   ),
                 ),
               ],
@@ -261,7 +271,7 @@ class ProfileAppBar extends StatelessWidget {
                   height: 35,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.black.withOpacity(0.2),
+                      color: Colors.grey.shade400,
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(10),
@@ -270,7 +280,6 @@ class ProfileAppBar extends StatelessWidget {
                     child: Text(
                       "Edit profile",
                       style: TextStyle(
-                        color: const Color.fromARGB(255, 23, 22, 22),
                         fontSize: Sizes.size16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -282,7 +291,7 @@ class ProfileAppBar extends StatelessWidget {
                   height: 35,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.black.withOpacity(0.2),
+                      color: Colors.grey.shade400,
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(10),
@@ -291,7 +300,6 @@ class ProfileAppBar extends StatelessWidget {
                     child: Text(
                       "Share profile",
                       style: TextStyle(
-                        color: Colors.black,
                         fontSize: Sizes.size16,
                         fontWeight: FontWeight.w600,
                       ),

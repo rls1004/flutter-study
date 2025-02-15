@@ -55,8 +55,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        backgroundColor: Colors.white,
-        selectedItemColor: Colors.black,
         currentIndex: _selectedIndex,
         onTap: (index) => _onTap(context, index),
         items: [

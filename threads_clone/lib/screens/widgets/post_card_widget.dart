@@ -68,9 +68,11 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: VerticalDivider(
-                              color: Colors.black.withOpacity(0.1),
-                              thickness: 1.5,
+                            child: Opacity(
+                              opacity: 0.5,
+                              child: VerticalDivider(
+                                thickness: 1.5,
+                              ),
                             ),
                           ),
                         ),
@@ -108,8 +110,7 @@ class _PostCardWidgetState extends State<PostCardWidget> {
         ),
         ReactionInfos(replies: replies, likes: likes, reply: widget.replyData),
         Divider(
-          color: Colors.black.withOpacity(0.1),
-          thickness: 0.7,
+          thickness: 0.4,
         ),
       ],
     );
@@ -124,29 +125,32 @@ class ReactionButtons extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Row(
-        children: [
-          if (!reply) Gaps.h64,
-          FaIcon(
-            FontAwesomeIcons.heart,
-            size: Sizes.size20,
-          ),
-          Gaps.h10,
-          FaIcon(
-            FontAwesomeIcons.comment,
-            size: Sizes.size20,
-          ),
-          Gaps.h10,
-          FaIcon(
-            FontAwesomeIcons.retweet,
-            size: Sizes.size20,
-          ),
-          Gaps.h10,
-          FaIcon(
-            FontAwesomeIcons.paperPlane,
-            size: Sizes.size20,
-          ),
-        ],
+  Widget build(BuildContext context) => Opacity(
+        opacity: 0.8,
+        child: Row(
+          children: [
+            if (!reply) Gaps.h64,
+            FaIcon(
+              FontAwesomeIcons.heart,
+              size: Sizes.size20,
+            ),
+            Gaps.h10,
+            FaIcon(
+              FontAwesomeIcons.comment,
+              size: Sizes.size20,
+            ),
+            Gaps.h10,
+            FaIcon(
+              FontAwesomeIcons.retweet,
+              size: Sizes.size20,
+            ),
+            Gaps.h10,
+            FaIcon(
+              FontAwesomeIcons.paperPlane,
+              size: Sizes.size20,
+            ),
+          ],
+        ),
       );
 }
 
@@ -173,10 +177,10 @@ class ReactionInfos extends StatelessWidget {
                 child: Center(child: RepliesImageWidget(num: replies)),
               ),
               Gaps.h5,
-              Text(
-                "$replies replies ・ $likes likes",
-                style: TextStyle(
-                  color: Colors.black.withOpacity(0.5),
+              Opacity(
+                opacity: 0.5,
+                child: Text(
+                  "$replies replies ・ $likes likes",
                 ),
               ),
             ],

@@ -131,31 +131,28 @@ class _WriteScreenState extends State<WriteScreen> {
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
               ),
-              child: Container(
-                // onTap: () => textFocus.unfocus(),
-                child: Scaffold(
-                  appBar: WriteScreenAppBar(),
-                  body: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          IntrinsicHeight(
-                            child: Row(
-                              children: [
-                                writeLeftSide(),
-                                writeRightSide(context)
-                              ],
-                            ),
+              child: Scaffold(
+                appBar: WriteScreenAppBar(),
+                body: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        IntrinsicHeight(
+                          child: Row(
+                            children: [
+                              writeLeftSide(),
+                              writeRightSide(context)
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  bottomSheet: WriteScreenBottomBar(contents: _contents),
-                  resizeToAvoidBottomInset: true,
                 ),
+                bottomSheet: WriteScreenBottomBar(contents: _contents),
+                resizeToAvoidBottomInset: true,
               ),
             ),
           ),
@@ -195,7 +192,7 @@ class _WriteScreenState extends State<WriteScreen> {
               hintStyle: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                color: Colors.black.withOpacity(0.4),
+                color: Colors.grey,
                 letterSpacing: -0.5,
               ),
               border: InputBorder.none,
@@ -219,9 +216,11 @@ class _WriteScreenState extends State<WriteScreen> {
           withPlusButton: false,
         ),
         Expanded(
-          child: VerticalDivider(
-            thickness: 1.5,
-            color: Colors.black.withOpacity(0.1),
+          child: Opacity(
+            opacity: 0.5,
+            child: VerticalDivider(
+              thickness: 1.5,
+            ),
           ),
         ),
         ProfileWidget(
@@ -238,10 +237,12 @@ class _WriteScreenState extends State<WriteScreen> {
       padding: const EdgeInsets.symmetric(vertical: Sizes.size10),
       child: GestureDetector(
         onTap: onAttachmentTap,
-        child: FaIcon(
-          FontAwesomeIcons.paperclip,
-          size: 20,
-          color: Colors.black.withOpacity(0.4),
+        child: Opacity(
+          opacity: 0.4,
+          child: FaIcon(
+            FontAwesomeIcons.paperclip,
+            size: 20,
+          ),
         ),
       ),
     );
@@ -301,30 +302,28 @@ class WriteScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   AppBar build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
-      shadowColor: Colors.black,
-      surfaceTintColor: Colors.transparent,
-      elevation: 0.2,
       title: Text(
         "New thread",
         style: TextStyle(
-          color: Colors.black,
           fontSize: 20,
           fontWeight: FontWeight.w700,
         ),
       ),
       leadingWidth: 80,
-      leading: TextButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        child: Text(
-          "Cancel",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 14,
+      leading: Center(
+        child: GestureDetector(
+          onTap: () => Navigator.of(context).pop(),
+          child: Text(
+            "Cancel",
+            style: TextStyle(
+              fontSize: 14,
+            ),
           ),
         ),
+      ),
+      bottom: PreferredSize(
+        preferredSize: Size.fromHeight(0),
+        child: Divider(height: 0, thickness: 0.3, color: Colors.grey),
       ),
     );
   }
@@ -345,19 +344,21 @@ class WriteScreenBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).scaffoldBackgroundColor,
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "Anyone can reply",
-              style: TextStyle(
-                color: Colors.black.withOpacity(0.4),
-                fontSize: Sizes.size14,
-                fontWeight: FontWeight.w400,
+            Opacity(
+              opacity: 0.4,
+              child: Text(
+                "Anyone can reply",
+                style: TextStyle(
+                  fontSize: Sizes.size14,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
             TextButton(

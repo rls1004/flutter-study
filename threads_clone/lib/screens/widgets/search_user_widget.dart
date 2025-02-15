@@ -5,6 +5,7 @@ import 'package:threads_clone/utils/sizes.dart';
 import 'package:threads_clone/models/search_model.dart';
 import 'package:threads_clone/screens/widgets/profile_widget.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
+import 'package:threads_clone/utils/utils.dart';
 
 class SearchUserWidget extends StatefulWidget {
   final SearchModel userInfo;
@@ -58,16 +59,18 @@ class _SearchUserWidgetState extends State<SearchUserWidget> {
                         ),
                       ],
                     ),
-                    Text(
-                      realName,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: Sizes.size16,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: -0.5,
-                          height: 1.5),
+                    Opacity(
+                      opacity: 0.5,
+                      child: Text(
+                        realName,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: Sizes.size16,
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: -0.5,
+                            height: 1.5),
+                      ),
                     ),
                     Gaps.v5,
                     Text(
@@ -82,24 +85,27 @@ class _SearchUserWidgetState extends State<SearchUserWidget> {
                   ],
                 ),
               ),
-              TextButton(
-                onPressed: () {},
-                child: Container(
-                  width: 90,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black.withOpacity(0.3),
-                      width: 0.5,
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 5,
+                ),
+                child: Opacity(
+                  opacity: 0.9,
+                  child: Container(
+                    width: 90,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      color: isDarkMode(context) ? Colors.white : Colors.black,
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Follow",
-                      style: TextStyle(
-                        color: Colors.black,
-                        letterSpacing: -0.5,
+                    child: Center(
+                      child: Text(
+                        "Follow",
+                        style: TextStyle(
+                          color:
+                              isDarkMode(context) ? Colors.black : Colors.white,
+                          letterSpacing: -0.5,
+                        ),
                       ),
                     ),
                   ),
@@ -107,11 +113,13 @@ class _SearchUserWidgetState extends State<SearchUserWidget> {
               ),
             ],
           ),
-          Divider(
-            color: Colors.black.withOpacity(0.1),
-            thickness: 0.7,
-            indent: 50,
-            height: 10,
+          Opacity(
+            opacity: 0.7,
+            child: Divider(
+              thickness: 0.7,
+              indent: 50,
+              height: 10,
+            ),
           ),
         ],
       ),
