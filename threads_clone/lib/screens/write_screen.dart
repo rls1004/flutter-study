@@ -9,6 +9,7 @@ import 'package:threads_clone/utils/sizes.dart';
 import 'package:threads_clone/screens/camera/camera_screen.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
 import 'package:threads_clone/screens/widgets/profile_widget.dart';
+import 'package:threads_clone/utils/utils.dart';
 import 'package:video_player/video_player.dart';
 
 bool isIMG(XFile file) =>
@@ -114,7 +115,8 @@ class _WriteScreenState extends State<WriteScreen> {
             ),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.7),
+                color:
+                    Colors.white.withOpacity(isDarkMode(context) ? 0.3 : 0.7),
               ),
             ),
           ),

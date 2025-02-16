@@ -107,6 +107,9 @@ class ProfileHome extends StatelessWidget {
                 pinned: true,
                 delegate: _StickyHeaderDelegate(
                   child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                    ),
                     alignment: Alignment.center,
                     child: TabBar(
                       dividerColor: Colors.grey,
