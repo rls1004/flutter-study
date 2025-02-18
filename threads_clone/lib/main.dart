@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:threads_clone/screens/main_navigation_screen.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:threads_clone/router.dart';
 
 void main() {
+  usePathUrlStrategy();
   runApp(const MyApp());
 }
 
@@ -11,7 +13,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       title: 'Threads clone',
       themeMode: ThemeMode.system,
       theme: ThemeData(
@@ -53,7 +56,6 @@ class MyApp extends StatelessWidget {
           labelColor: Colors.black,
         ),
       ),
-      home: MainNavigationScreen(),
     );
   }
 }

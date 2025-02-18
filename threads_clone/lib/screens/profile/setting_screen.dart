@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:threads_clone/screens/profile/privacy_screen.dart';
 import 'package:threads_clone/utils/gaps.dart';
 import 'package:threads_clone/utils/sizes.dart';
 
 class SettingScreen extends StatelessWidget {
-  final Function onTapBack;
-  final Function onTapPrivacy;
-  const SettingScreen(
-      {super.key, required this.onTapBack, required this.onTapPrivacy});
+  static const routeName = "/settings";
+  const SettingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class SettingScreen extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.all(14),
           child: GestureDetector(
-            onTap: () => onTapBack(),
+            onTap: () => context.pop(),
             child: Row(
               children: [
                 FaIcon(
@@ -90,7 +90,7 @@ class SettingScreen extends StatelessWidget {
                 fontSize: Sizes.size14,
               ),
             ),
-            onTap: () => onTapPrivacy(),
+            onTap: () => context.push(PrivacyScreen.routeName),
           ),
           ListTile(
             minTileHeight: 0,

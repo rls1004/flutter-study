@@ -7,6 +7,7 @@ import 'package:threads_clone/utils/fake_generator.dart';
 import 'package:threads_clone/utils/utils.dart';
 
 class ActivityScreen extends StatefulWidget {
+  static const routeName = "/activity";
   const ActivityScreen({super.key});
 
   @override

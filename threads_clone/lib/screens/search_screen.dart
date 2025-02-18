@@ -7,6 +7,7 @@ import 'package:threads_clone/screens/widgets/search_user_widget.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
 
 class SearchScreen extends StatefulWidget {
+  static const routeName = "/search";
   const SearchScreen({super.key});
 
   @override

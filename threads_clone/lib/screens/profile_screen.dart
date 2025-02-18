@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:threads_clone/utils/gaps.dart';
 import 'package:threads_clone/utils/sizes.dart';
-import 'package:threads_clone/screens/profile/privacy_screen.dart';
 import 'package:threads_clone/screens/profile/setting_screen.dart';
 import 'package:threads_clone/screens/widgets/post_card_widget.dart';
 import 'package:threads_clone/screens/widgets/profile_widget.dart';
@@ -11,84 +11,14 @@ import 'package:threads_clone/screens/widgets/reply_widget.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
 import 'package:threads_clone/utils/utils.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
+  static const routeName = "/profile";
   final String userName;
-  const ProfileScreen({super.key, required this.userName});
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  late final List<Widget> screens;
-  int _selectedIndex = 0;
-  final PageController _pageController = PageController();
-
-  void onTapSetting() {
-    setState(() {
-      _selectedIndex = 1;
-
-      _pageController.animateToPage(
-        _selectedIndex,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    });
-  }
-
-  void onTapBack() {
-    setState(() {
-      _selectedIndex = _selectedIndex - 1;
-      _pageController.animateToPage(
-        _selectedIndex,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    });
-  }
-
-  void onTapPrivacy() {
-    setState(() {
-      _selectedIndex = 2;
-      _pageController.animateToPage(
-        _selectedIndex,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    screens = [
-      ProfileHome(
-        userName: "Jane",
-        onTapSetting: onTapSetting,
-      ),
-      SettingScreen(onTapBack: onTapBack, onTapPrivacy: onTapPrivacy),
-      PrivacyScreen(onTapBack: onTapBack),
-    ];
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return PageView(
-      controller: _pageController,
-      children: screens,
-    );
-  }
-}
-
-class ProfileHome extends StatelessWidget {
-  const ProfileHome({
+  const ProfileScreen({
     super.key,
     required this.userName,
-    required this.onTapSetting,
   });
-
-  final String userName;
-  final Function onTapSetting;
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +31,6 @@ class ProfileHome extends StatelessWidget {
             headerSliverBuilder: (context, innerBoxIsScrolled) => [
               ProfileAppBar(
                 userName: userName,
-                onTap: onTapSetting,
               ),
               SliverPersistentHeader(
                 pinned: true,
@@ -153,11 +82,9 @@ class ProfileHome extends StatelessWidget {
 
 class ProfileAppBar extends StatelessWidget {
   final String userName;
-  final Function onTap;
   const ProfileAppBar({
     super.key,
     required this.userName,
-    required this.onTap,
   });
 
   @override
@@ -179,7 +106,7 @@ class ProfileAppBar extends StatelessWidget {
                 FaIcon(FontAwesomeIcons.instagram, size: 30),
                 Gaps.h14,
                 GestureDetector(
-                  onTap: () => onTap(),
+                  onTap: () => context.push(SettingScreen.routeName),
                   child: Container(
                     clipBehavior: Clip.hardEdge,
                     width: 30,

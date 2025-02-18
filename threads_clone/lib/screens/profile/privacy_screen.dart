@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:threads_clone/utils/gaps.dart';
 import 'package:threads_clone/utils/sizes.dart';
 import 'package:threads_clone/utils/utils.dart';
 
 class PrivacyScreen extends StatefulWidget {
-  final Function onTapBack;
-  const PrivacyScreen({super.key, required this.onTapBack});
+  static const routeName = "/settings/privacy";
+  const PrivacyScreen({super.key});
 
   @override
   State<PrivacyScreen> createState() => _PrivacyScreenState();
@@ -37,7 +38,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         leading: Padding(
           padding: const EdgeInsets.all(14),
           child: GestureDetector(
-            onTap: () => widget.onTapBack(),
+            onTap: () => context.pop(),
             child: Row(
               children: [
                 FaIcon(
