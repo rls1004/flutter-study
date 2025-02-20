@@ -6,9 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/utils/gaps.dart';
 import 'package:threads_clone/utils/sizes.dart';
-import 'package:threads_clone/screens/camera/camera_screen.dart';
+import 'package:threads_clone/features/write/views/camera/camera_screen.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
-import 'package:threads_clone/screens/widgets/profile_widget.dart';
+import 'package:threads_clone/features/home/views/widgets/profile_widget.dart';
 import 'package:threads_clone/utils/utils.dart';
 import 'package:video_player/video_player.dart';
 

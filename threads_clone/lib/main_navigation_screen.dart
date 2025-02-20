@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:threads_clone/screens/activity_screen.dart';
-import 'package:threads_clone/screens/home_screen.dart';
-import 'package:threads_clone/screens/profile_screen.dart';
-import 'package:threads_clone/screens/search_screen.dart';
+import 'package:threads_clone/features/activities/views/activity_screen.dart';
+import 'package:threads_clone/features/home/views/home_screen.dart';
+import 'package:threads_clone/features/profiles/views/profile_screen.dart';
+import 'package:threads_clone/features/search/views/search_screen.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
-import 'package:threads_clone/screens/write_screen.dart';
+import 'package:threads_clone/features/write/views/write_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   final Widget child;

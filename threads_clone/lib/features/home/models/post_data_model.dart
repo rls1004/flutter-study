@@ -1,4 +1,4 @@
-class PostModel {
+class PostDataModel {
   late int replies;
   late int likes;
   late int time;
@@ -9,7 +9,7 @@ class PostModel {
 
   late String contents;
 
-  PostModel(
+  PostDataModel(
       {required this.replies,
       required this.likes,
       required this.time,

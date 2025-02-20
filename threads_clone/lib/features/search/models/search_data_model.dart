@@ -1,8 +1,8 @@
-class SearchModel {
+class SearchDataModel {
   String userName;
   String realName;
   int followers;
-  SearchModel(this.userName, this.realName, this.followers);
+  SearchDataModel(this.userName, this.realName, this.followers);
 
   String followersToString() {
     String followersStr = "${followers ~/ 10}";

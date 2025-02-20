@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/utils/sizes.dart';
-import 'package:threads_clone/models/activity_model.dart';
+import 'package:threads_clone/features/activities/models/activity_data_model.dart';
 import 'package:threads_clone/utils/utils.dart';
 
 class ProfileWidget extends StatelessWidget {

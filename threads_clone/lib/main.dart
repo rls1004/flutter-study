@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:threads_clone/features/profiles/repos/setting_config_repo.dart';
+import 'package:threads_clone/features/profiles/view_models/setting_config_vm.dart';
 import 'package:threads_clone/router.dart';
+import 'package:threads_clone/utils/utils.dart';
 
-void main() {
-  usePathUrlStrategy();
-  runApp(const MyApp());
+void main() async {
+  // usePathUrlStrategy();
+  WidgetsFlutterBinding.ensureInitialized();
+  final preferences = await SharedPreferences.getInstance();
+  final repository = SettingConfigRepository(preferences);
+
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (context) => SettingConfigViewModel(repository),
+      ),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +31,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: router,
       title: 'Threads clone',
-      themeMode: ThemeMode.system,
+      themeMode: isDarkMode(context)
+          ? ThemeMode.dark
+          : ThemeMode.light, //ThemeMode.system,
       theme: ThemeData(
         brightness: Brightness.light,
         scaffoldBackgroundColor: Colors.white,

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:threads_clone/utils/gaps.dart';
-import 'package:threads_clone/models/reply_model.dart';
-import 'package:threads_clone/screens/widgets/photo_list_widget.dart';
-import 'package:threads_clone/screens/widgets/post_card_widget.dart';
-import 'package:threads_clone/screens/widgets/profile_widget.dart';
-import 'package:threads_clone/screens/widgets/text_contents_widget.dart';
+import 'package:threads_clone/features/profiles/models/reply_data_model.dart';
+import 'package:threads_clone/features/home/views/widgets/photo_list_widget.dart';
+import 'package:threads_clone/features/home/views/widgets/post_card_widget.dart';
+import 'package:threads_clone/features/home/views/widgets/profile_widget.dart';
+import 'package:threads_clone/features/home/views/widgets/text_contents_widget.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
 
 class ReplyWidget extends StatefulWidget {
-  final ReplyModel replyInfo;
+  final ReplyDataModel replyInfo;
   const ReplyWidget({super.key, required this.replyInfo});
 
   @override
@@ -110,7 +110,7 @@ class _ReplyWidgetState extends State<ReplyWidget> {
 }
 
 PostCardWidget getReply(String userName) {
-  ReplyModel replyInfo = generateFakeReply(userName);
+  ReplyDataModel replyInfo = generateFakeReply(userName);
   return PostCardWidget(postData: replyInfo.postInfo, replyData: replyInfo);
 }
 

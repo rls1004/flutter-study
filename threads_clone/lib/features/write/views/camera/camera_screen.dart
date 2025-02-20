@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:threads_clone/utils/gaps.dart';
 import 'package:threads_clone/utils/sizes.dart';
-import 'package:threads_clone/screens/camera/camera_preview_screen.dart';
+import 'package:threads_clone/features/write/views/camera/camera_preview_screen.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});

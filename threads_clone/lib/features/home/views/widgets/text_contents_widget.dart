@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:threads_clone/utils/gaps.dart';
-import 'package:threads_clone/screens/widgets/bottom_menu_widget.dart';
+import 'package:threads_clone/features/home/views/widgets/bottom_menu_widget.dart';
 
 class TextContentsWidget extends StatelessWidget {
   final String author;

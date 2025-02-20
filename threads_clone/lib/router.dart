@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:threads_clone/screens/activity_screen.dart';
-import 'package:threads_clone/screens/home_screen.dart';
-import 'package:threads_clone/screens/main_navigation_screen.dart';
-import 'package:threads_clone/screens/profile/privacy_screen.dart';
-import 'package:threads_clone/screens/profile/setting_screen.dart';
-import 'package:threads_clone/screens/profile_screen.dart';
-import 'package:threads_clone/screens/search_screen.dart';
+import 'package:threads_clone/features/activities/views/activity_screen.dart';
+import 'package:threads_clone/features/home/views/home_screen.dart';
+import 'package:threads_clone/main_navigation_screen.dart';
+import 'package:threads_clone/features/profiles/views/settings/privacy_screen.dart';
+import 'package:threads_clone/features/profiles/views/settings/setting_screen.dart';
+import 'package:threads_clone/features/profiles/views/profile_screen.dart';
+import 'package:threads_clone/features/search/views/search_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();

@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/utils/gaps.dart';
 import 'package:threads_clone/utils/sizes.dart';
-import 'package:threads_clone/models/post_model.dart';
-import 'package:threads_clone/models/reply_model.dart';
-import 'package:threads_clone/screens/widgets/photo_list_widget.dart';
-import 'package:threads_clone/screens/widgets/replies_image_widget.dart';
-import 'package:threads_clone/screens/widgets/text_contents_widget.dart';
+import 'package:threads_clone/features/home/models/post_data_model.dart';
+import 'package:threads_clone/features/profiles/models/reply_data_model.dart';
+import 'package:threads_clone/features/home/views/widgets/photo_list_widget.dart';
+import 'package:threads_clone/features/home/views/widgets/replies_image_widget.dart';
+import 'package:threads_clone/features/home/views/widgets/text_contents_widget.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
-import 'package:threads_clone/screens/widgets/profile_widget.dart';
+import 'package:threads_clone/features/home/views/widgets/profile_widget.dart';
 
 class PostCardWidget extends StatefulWidget {
   final String userName;
-  final PostModel postData;
-  final ReplyModel? replyData;
+  final PostDataModel postData;
+  final ReplyDataModel? replyData;
 
   const PostCardWidget(
       {super.key, this.userName = "", required this.postData, this.replyData});
@@ -155,7 +155,7 @@ class ReactionButtons extends StatelessWidget {
 }
 
 class ReactionInfos extends StatelessWidget {
-  final ReplyModel? reply;
+  final ReplyDataModel? reply;
   const ReactionInfos({
     super.key,
     required this.replies,

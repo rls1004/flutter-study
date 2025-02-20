@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:threads_clone/utils/gaps.dart';
 import 'package:threads_clone/utils/sizes.dart';
-import 'package:threads_clone/models/search_model.dart';
-import 'package:threads_clone/screens/widgets/search_user_widget.dart';
+import 'package:threads_clone/features/search/models/search_data_model.dart';
+import 'package:threads_clone/features/search/views/widgets/search_user_widget.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -15,7 +15,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  List<SearchModel> userList = [];
+  List<SearchDataModel> userList = [];
   String searchText = "";
 
   @override

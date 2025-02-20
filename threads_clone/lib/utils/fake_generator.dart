@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'package:faker/faker.dart' as develop;
-import 'package:threads_clone/models/activity_model.dart';
-import 'package:threads_clone/models/post_model.dart';
-import 'package:threads_clone/models/reply_model.dart';
-import 'package:threads_clone/models/search_model.dart';
+import 'package:threads_clone/features/activities/models/activity_data_model.dart';
+import 'package:threads_clone/features/home/models/post_data_model.dart';
+import 'package:threads_clone/features/profiles/models/reply_data_model.dart';
+import 'package:threads_clone/features/search/models/search_data_model.dart';
 
 getUrl({required int width, int? height, String? seed}) =>
     develop.faker.image.loremPicsum(
@@ -13,7 +13,7 @@ getUrl({required int width, int? height, String? seed}) =>
       random: seed?.length ?? develop.faker.randomGenerator.numbers(100, 1)[0],
     );
 
-PostModel generateFakePostData(String userName) {
+PostDataModel generateFakePostData(String userName) {
   List<int> randomNumber = develop.faker.randomGenerator.numbers(300, 2);
 
   int replies = randomNumber[0];
@@ -30,7 +30,7 @@ PostModel generateFakePostData(String userName) {
   bool isVerifiedUser = [true, false][author.hashCode % 2];
   String contents = develop.faker.lorem.sentences(1)[0];
 
-  return PostModel(
+  return PostDataModel(
       replies: replies,
       likes: likes,
       time: time,
@@ -67,16 +67,16 @@ String generateFakeUserName() {
   return generateFakeUserName();
 }
 
-SearchModel generateFakeUserList() {
+SearchDataModel generateFakeUserList() {
   String userName = generateFakeUserName();
   String realName = develop.faker.person.name();
 
   int followersNumber = develop.faker.randomGenerator.numbers(999, 1)[0];
 
-  return SearchModel(userName, realName, followersNumber);
+  return SearchDataModel(userName, realName, followersNumber);
 }
 
-ActionModel generateFakeActivity() {
+ActivityDataModel generateFakeActivity() {
   String name = generateFakeUserName();
   List<ActionType> actionList = [
     ActionType.reply,
@@ -94,7 +94,7 @@ ActionModel generateFakeActivity() {
 
   int time = develop.faker.randomGenerator.integer(24 * 60);
 
-  return ActionModel(
+  return ActivityDataModel(
     name,
     act,
     describe: describe,
@@ -103,12 +103,12 @@ ActionModel generateFakeActivity() {
   );
 }
 
-ReplyModel generateFakeReply(String userName) {
-  PostModel fakePost = generateFakePostData("");
+ReplyDataModel generateFakeReply(String userName) {
+  PostDataModel fakePost = generateFakePostData("");
   String comment = develop.faker.lorem.sentences(1)[0];
   int time = develop.faker.randomGenerator.numbers(60 * 24, 1)[0];
 
-  return ReplyModel(
+  return ReplyDataModel(
       postInfo: fakePost,
       userName: userName.isEmpty ? generateFakeUserName() : userName,
       comment: comment,
