@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:threads_clone/features/profiles/repos/setting_config_repo.dart';
 import 'package:threads_clone/features/profiles/view_models/setting_config_vm.dart';
 import 'package:threads_clone/router.dart';
-import 'package:threads_clone/utils/utils.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
   // usePathUrlStrategy();
@@ -12,26 +11,27 @@ void main() async {
   final preferences = await SharedPreferences.getInstance();
   final repository = SettingConfigRepository(preferences);
 
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(
-        create: (context) => SettingConfigViewModel(repository),
-      ),
+  repository.isDarkMode();
+
+  runApp(ProviderScope(
+    overrides: [
+      settingConfigProvider
+          .overrideWith(() => SettingConfigViewModel(repository)),
     ],
     child: const MyApp(),
   ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
       routerConfig: router,
       title: 'Threads clone',
-      themeMode: isDarkMode(context)
+      themeMode: ref.watch(settingConfigProvider).darkMode
           ? ThemeMode.dark
           : ThemeMode.light, //ThemeMode.system,
       theme: ThemeData(

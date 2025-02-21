@@ -1,20 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:threads_clone/features/profiles/view_models/setting_config_vm.dart';
 import 'package:threads_clone/features/profiles/views/settings/privacy_screen.dart';
 import 'package:threads_clone/utils/gaps.dart';
 import 'package:threads_clone/utils/sizes.dart';
-import 'package:threads_clone/utils/utils.dart';
 
-class SettingScreen extends StatelessWidget {
+class SettingScreen extends ConsumerWidget {
   static const routeName = "/settings";
   const SettingScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -59,18 +58,24 @@ class SettingScreen extends StatelessWidget {
             thumbColor: WidgetStatePropertyAll(
                 Theme.of(context).scaffoldBackgroundColor),
             inactiveTrackColor: Colors.grey,
-            activeColor: isDarkMode(context) ? Colors.white : Colors.black,
-            value: isDarkMode(context),
+            activeColor: ref.watch(settingConfigProvider).darkMode
+                ? Colors.white
+                : Colors.black,
+            value: ref.watch(settingConfigProvider).darkMode,
             onChanged: (value) =>
-                context.read<SettingConfigViewModel>().setDarkMode(value),
+                ref.read(settingConfigProvider.notifier).setDarkMode(value),
             title: Text(
-              isDarkMode(context) ? "Dark Mode" : "Light Mode",
+              ref.watch(settingConfigProvider).darkMode
+                  ? "Dark Mode"
+                  : "Light Mode",
               style: TextStyle(
                 fontSize: Sizes.size14,
               ),
             ),
             secondary: Icon(
-              isDarkMode(context) ? Icons.dark_mode : Icons.light_mode,
+              ref.watch(settingConfigProvider).darkMode
+                  ? Icons.dark_mode
+                  : Icons.light_mode,
               size: Sizes.size28,
             ),
           ),
