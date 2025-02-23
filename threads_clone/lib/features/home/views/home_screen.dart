@@ -5,7 +5,7 @@ import 'package:threads_clone/utils/sizes.dart';
 import 'package:threads_clone/features/home/views/widgets/post_card_widget.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const routeName = "/";
+  static const routeName = "/home";
   const HomeScreen({super.key});
 
   @override

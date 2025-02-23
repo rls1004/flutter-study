@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:threads_clone/features/auth/repos/authentication_repo.dart';
 import 'package:threads_clone/utils/gaps.dart';
 import 'package:threads_clone/utils/sizes.dart';
 import 'package:threads_clone/features/write/views/camera/camera_screen.dart';
@@ -16,15 +18,14 @@ bool isIMG(XFile file) =>
     file.name.endsWith(".jpg") || file.name.endsWith(".png");
 bool isMP4(XFile file) => file.name.endsWith(".mp4");
 
-class WriteScreen extends StatefulWidget {
-  final String userName;
-  const WriteScreen({super.key, required this.userName});
+class WriteScreen extends ConsumerStatefulWidget {
+  const WriteScreen({super.key});
 
   @override
-  State<WriteScreen> createState() => _WriteScreenState();
+  ConsumerState<WriteScreen> createState() => _WriteScreenState();
 }
 
-class _WriteScreenState extends State<WriteScreen> {
+class _WriteScreenState extends ConsumerState<WriteScreen> {
   TextEditingController ctrl = TextEditingController();
 
   FocusNode textFocus = FocusNode();
@@ -164,6 +165,8 @@ class _WriteScreenState extends State<WriteScreen> {
   }
 
   Widget writeRightSide(BuildContext context) {
+    final String userName = ref.read(authRepo).user!.email!.split('@')[0];
+
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,7 +174,7 @@ class _WriteScreenState extends State<WriteScreen> {
           Gaps.v5,
           Text(
             textAlign: TextAlign.left,
-            widget.userName,
+            userName,
             style: TextStyle(
               fontWeight: FontWeight.w600,
               letterSpacing: -0.5,
@@ -211,10 +214,12 @@ class _WriteScreenState extends State<WriteScreen> {
   }
 
   Widget writeLeftSide() {
+    final String userName = ref.read(authRepo).user!.email!.split('@')[0];
+
     return Column(
       children: [
         ProfileWidget(
-          profileUrl: getUrl(width: 40, seed: widget.userName),
+          profileUrl: getUrl(width: 40, seed: userName),
           withPlusButton: false,
         ),
         Expanded(
@@ -226,7 +231,7 @@ class _WriteScreenState extends State<WriteScreen> {
           ),
         ),
         ProfileWidget(
-          profileUrl: getUrl(width: 40, seed: widget.userName),
+          profileUrl: getUrl(width: 40, seed: userName),
           withPlusButton: false,
           radius: 10,
         ),

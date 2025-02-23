@@ -8,6 +8,7 @@ import 'package:threads_clone/features/profiles/views/profile_screen.dart';
 import 'package:threads_clone/features/search/views/search_screen.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
 import 'package:threads_clone/features/write/views/write_screen.dart';
+import 'package:threads_clone/utils/utils.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   final Widget child;
@@ -29,9 +30,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         isDismissible: false,
         isScrollControlled: true,
         enableDrag: false,
-        builder: (context) => WriteScreen(userName: widget.userName),
+        builder: (context) => WriteScreen(),
       ).whenComplete(() {
-        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+        SystemChrome.setSystemUIOverlayStyle(isDarkMode(context)
+            ? SystemUiOverlayStyle.light
+            : SystemUiOverlayStyle.dark);
       });
     } else {
       setState(() {

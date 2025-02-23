@@ -1,13 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:threads_clone/features/profiles/repos/setting_config_repo.dart';
 import 'package:threads_clone/features/profiles/view_models/setting_config_vm.dart';
+import 'package:threads_clone/firebase_options.dart';
 import 'package:threads_clone/router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
   // usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   final preferences = await SharedPreferences.getInstance();
   final repository = SettingConfigRepository(preferences);
 
@@ -29,7 +36,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: ref.watch(routerProvider),
       title: 'Threads clone',
       themeMode: ref.watch(settingConfigProvider).darkMode
           ? ThemeMode.dark

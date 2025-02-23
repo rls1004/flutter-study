@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:threads_clone/features/auth/repos/authentication_repo.dart';
 import 'package:threads_clone/utils/gaps.dart';
 import 'package:threads_clone/utils/sizes.dart';
 import 'package:threads_clone/features/profiles/views/settings/setting_screen.dart';
@@ -11,17 +13,16 @@ import 'package:threads_clone/features/profiles/views/widgets/reply_widget.dart'
 import 'package:threads_clone/utils/fake_generator.dart';
 import 'package:threads_clone/utils/utils.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends ConsumerWidget {
   static const routeName = "/profile";
-  final String userName;
 
   const ProfileScreen({
     super.key,
-    required this.userName,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final String userName = ref.read(authRepo).user?.email?.split('@')[0] ?? "";
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),

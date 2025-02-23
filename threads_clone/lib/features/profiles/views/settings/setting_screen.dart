@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:threads_clone/features/auth/repos/authentication_repo.dart';
 import 'package:threads_clone/features/profiles/view_models/setting_config_vm.dart';
 import 'package:threads_clone/features/profiles/views/settings/privacy_screen.dart';
 import 'package:threads_clone/utils/gaps.dart';
@@ -183,7 +184,7 @@ class SettingScreen extends ConsumerWidget {
                             child: Text("No"),
                           ),
                           CupertinoDialogAction(
-                            onPressed: () => Navigator.of(context).pop(),
+                            onPressed: () => ref.read(authRepo).logOut(),
                             isDestructiveAction: true,
                             child: Text("Yes"),
                           ),
