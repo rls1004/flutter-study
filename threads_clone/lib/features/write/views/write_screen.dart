@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:threads_clone/features/auth/repos/authentication_repo.dart';
+import 'package:threads_clone/features/profiles/view_models/users_view_model.dart';
+import 'package:threads_clone/features/write/view_models/upload_post_view_model.dart';
 import 'package:threads_clone/utils/gaps.dart';
 import 'package:threads_clone/utils/sizes.dart';
 import 'package:threads_clone/features/write/views/camera/camera_screen.dart';
@@ -31,7 +33,7 @@ class _WriteScreenState extends ConsumerState<WriteScreen> {
   FocusNode textFocus = FocusNode();
 
   String _contents = "";
-  late XFile resultFile;
+  String _filePath = "";
   bool isRecorded = false;
   bool isVideoReady = false;
   bool isImageReady = false;
@@ -52,10 +54,9 @@ class _WriteScreenState extends ConsumerState<WriteScreen> {
 
     if (result != null) {
       isRecorded = true;
-      resultFile = result;
+      _filePath = result.path;
       if (isMP4(result)) {
-        _videoPlayerController =
-            VideoPlayerController.file(File(resultFile.path));
+        _videoPlayerController = VideoPlayerController.file(File(_filePath));
         await _videoPlayerController.initialize();
         await _videoPlayerController.setLooping(true);
         await _videoPlayerController.play();
@@ -83,6 +84,12 @@ class _WriteScreenState extends ConsumerState<WriteScreen> {
     setState(() {});
   }
 
+  void _onTapPost() async {
+    ref.read(uploadPostProvider.notifier).uploadPost(context,
+        description: _contents,
+        image: _filePath.isNotEmpty ? File(_filePath) : null);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -97,71 +104,94 @@ class _WriteScreenState extends ConsumerState<WriteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned.fill(
-          child: Container(
-            color: Colors.transparent,
+    return ref.watch(usersProvider).when(
+          error: (error, stackTrace) => Center(
+            child: Text(error.toString()),
           ),
-        ),
-        Positioned.fill(
-          top: 45,
-          left: 15,
-          right: 15,
-          child: ClipRRect(
-            clipBehavior: Clip.hardEdge,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(15),
-              topRight: Radius.circular(15),
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                color:
-                    Colors.white.withOpacity(isDarkMode(context) ? 0.3 : 0.7),
-              ),
+          loading: () => Center(
+            child: CircularProgressIndicator(
+              color: Colors.blue,
             ),
           ),
-        ),
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.93,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-              child: Scaffold(
-                appBar: WriteScreenAppBar(),
-                body: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        IntrinsicHeight(
-                          child: Row(
-                            children: [
-                              writeLeftSide(),
-                              writeRightSide(context)
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+          data: (data) => ref.watch(uploadPostProvider).when(
+                error: (error, stackTrace) => Center(
+                  child: Text(error.toString()),
+                ),
+                loading: () => Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.blue,
                   ),
                 ),
-                bottomSheet: WriteScreenBottomBar(contents: _contents),
-                resizeToAvoidBottomInset: true,
+                data: (data) => Stack(
+                  children: [
+                    Positioned.fill(
+                      child: Container(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    Positioned.fill(
+                      top: 45,
+                      left: 15,
+                      right: 15,
+                      child: ClipRRect(
+                        clipBehavior: Clip.hardEdge,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white
+                                .withOpacity(isDarkMode(context) ? 0.3 : 0.7),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.93,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                          child: Scaffold(
+                            appBar: WriteScreenAppBar(),
+                            body: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    IntrinsicHeight(
+                                      child: Row(
+                                        children: [
+                                          writeLeftSide(),
+                                          writeRightSide(context)
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            bottomSheet: WriteScreenBottomBar(
+                              contents: _contents,
+                              onTapPost: _onTapPost,
+                            ),
+                            resizeToAvoidBottomInset: true,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ),
-        ),
-      ],
-    );
+        );
   }
 
   Widget writeRightSide(BuildContext context) {
@@ -275,7 +305,7 @@ class _WriteScreenState extends ConsumerState<WriteScreen> {
                   child: isVideoReady
                       ? VideoPlayer(_videoPlayerController)
                       : isImageReady
-                          ? Image.file(File(resultFile.path))
+                          ? Image.file(File(_filePath))
                           : null,
                 ),
               ),
@@ -339,16 +369,18 @@ class WriteScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-class WriteScreenBottomBar extends StatelessWidget {
+class WriteScreenBottomBar extends ConsumerWidget {
+  final String contents;
+  final Function onTapPost;
+
   const WriteScreenBottomBar({
     super.key,
-    required String contents,
-  }) : _contents = contents;
-
-  final String _contents;
+    required this.contents,
+    required this.onTapPost,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -369,12 +401,12 @@ class WriteScreenBottomBar extends StatelessWidget {
               ),
             ),
             TextButton(
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => onTapPost(),
               child: Text(
                 "Post",
                 style: TextStyle(
                   color: Colors.blueAccent
-                      .withOpacity(_contents.isNotEmpty ? 1 : 0.3),
+                      .withOpacity(contents.isNotEmpty ? 1 : 0.3),
                   fontSize: Sizes.size16,
                   fontWeight: FontWeight.w800,
                 ),

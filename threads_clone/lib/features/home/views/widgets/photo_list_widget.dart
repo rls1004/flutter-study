@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:threads_clone/utils/gaps.dart';
-import 'package:threads_clone/utils/fake_generator.dart';
 
 class PhotoListWidget extends StatelessWidget {
-  final int numOfPhotos;
-  const PhotoListWidget({super.key, required this.numOfPhotos});
+  final List<String> fileList;
+  const PhotoListWidget({super.key, required this.fileList});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +14,7 @@ class PhotoListWidget extends StatelessWidget {
         child: Row(
           children: [
             Gaps.h60,
-            for (var i = 0; i < numOfPhotos; i++) ...[
+            for (var i = 0; i < fileList.length; i++) ...[
               Container(
                 clipBehavior: Clip.hardEdge,
                 decoration: BoxDecoration(
@@ -24,7 +23,7 @@ class PhotoListWidget extends StatelessWidget {
                       color: Colors.black.withOpacity(0.2),
                       width: 0.5,
                     )),
-                child: Image.network(getUrl(width: 270, height: 170)),
+                child: Image.network(fileList[i]),
               ),
               Gaps.h8,
             ],

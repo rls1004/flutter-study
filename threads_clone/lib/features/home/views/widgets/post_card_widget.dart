@@ -1,52 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:threads_clone/features/home/views/widgets/photo_list_widget.dart';
+import 'package:threads_clone/features/write/models/post_model.dart';
 import 'package:threads_clone/utils/gaps.dart';
 import 'package:threads_clone/utils/sizes.dart';
-import 'package:threads_clone/features/home/models/post_data_model.dart';
 import 'package:threads_clone/features/profiles/models/reply_data_model.dart';
-import 'package:threads_clone/features/home/views/widgets/photo_list_widget.dart';
 import 'package:threads_clone/features/home/views/widgets/replies_image_widget.dart';
 import 'package:threads_clone/features/home/views/widgets/text_contents_widget.dart';
 import 'package:threads_clone/utils/fake_generator.dart';
 import 'package:threads_clone/features/home/views/widgets/profile_widget.dart';
 
-class PostCardWidget extends StatefulWidget {
+class PostCardWidget extends ConsumerStatefulWidget {
   final String userName;
-  final PostDataModel postData;
+  // final PostDataModel postData;
+  final PostModel postData;
   final ReplyDataModel? replyData;
 
   const PostCardWidget(
       {super.key, this.userName = "", required this.postData, this.replyData});
 
   @override
-  State<PostCardWidget> createState() => _PostCardWidgetState();
+  ConsumerState<PostCardWidget> createState() => _PostCardWidgetState();
 }
 
-class _PostCardWidgetState extends State<PostCardWidget> {
+class _PostCardWidgetState extends ConsumerState<PostCardWidget> {
   late int replies;
   late int likes;
   late int time;
   late String timeFormat;
-  late int numOfPhotos;
+  // late int numOfPhotos;
+  late bool hasAttachments;
 
   late String author;
   late bool isVerifiedUser;
 
   late String contents;
 
+  List<String> fileList = [];
+
   @override
   void initState() {
     super.initState();
-    replies = widget.postData.replies;
+    replies = 0;
     likes = widget.postData.likes;
-    time = widget.postData.time;
-    timeFormat = widget.postData.getTimeFormat();
-    numOfPhotos = widget.postData.numOfPhotos;
+    time = widget.postData.createdAt;
+    // timeFormat = widget.postData.getTimeFormat();
 
-    author = widget.postData.author;
-    isVerifiedUser = widget.postData.isVerifiedUser;
+    int subTime = (DateTime.now().millisecondsSinceEpoch.toInt() -
+            widget.postData.createdAt.toInt()) ~/
+        1000;
+    int subH = subTime ~/ (60 * 60);
+    int subM = (subTime ~/ 60) % 60;
 
-    contents = widget.postData.contents;
+    timeFormat =
+        "${subH != 0 ? subH : ''}${subH != 0 ? 'h' : ''} ${subM != 0 ? subM : ''}${subM != 0 ? 'm' : ''}";
+    // numOfPhotos = widget.postData.numOfPhotos;
+
+    author = widget.postData.creator;
+    // isVerifiedUser = widget.postData.isVerifiedUser;
+    isVerifiedUser = true;
+    contents = widget.postData.description;
+    hasAttachments = widget.postData.hasAttachments;
+
+    fileList = widget.postData.attachments;
   }
 
   @override
@@ -96,8 +113,10 @@ class _PostCardWidgetState extends State<PostCardWidget> {
                                 contents: contents)
                           ],
                         ),
-                        if (numOfPhotos > 0)
-                          PhotoListWidget(numOfPhotos: numOfPhotos),
+                        if (hasAttachments) PhotoListWidget(fileList: fileList),
+                        // if (hasAttachments) {
+                        //   ref.read(threadsProvider.notifier).fetchAttachments(widget.postData.postID)
+                        // }
                         Gaps.v10,
                         ReactionButtons()
                       ],
@@ -223,19 +242,19 @@ class ReactionInfos extends StatelessWidget {
   }
 }
 
-PostCardWidget getThread(String userName) {
-  return PostCardWidget(
-    userName: userName,
-    postData: generateFakePostData(userName),
-  );
-}
+// PostCardWidget getThread(String userName) {
+//   return PostCardWidget(
+//     userName: userName,
+//     postData: generateFakePostData(userName),
+//   );
+// }
 
-List<PostCardWidget> getThreads(String userName) {
-  List<PostCardWidget> postCardWidgets = [];
-  for (var i = 0; i < 15; i++) {
-    postCardWidgets.add(getThread(userName));
-  }
-  postCardWidgets.sort((a, b) => a.postData.time < b.postData.time ? -1 : 1);
+// List<PostCardWidget> getThreads(String userName) {
+//   List<PostCardWidget> postCardWidgets = [];
+//   for (var i = 0; i < 15; i++) {
+//     postCardWidgets.add(getThread(userName));
+//   }
+//   postCardWidgets.sort((a, b) => a.postData.time < b.postData.time ? -1 : 1);
 
-  return postCardWidgets;
-}
+//   return postCardWidgets;
+// }

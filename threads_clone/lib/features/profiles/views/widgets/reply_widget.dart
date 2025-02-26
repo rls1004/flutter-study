@@ -87,8 +87,8 @@ class _ReplyWidgetState extends State<ReplyWidget> {
                                 contents: contents)
                           ],
                         ),
-                        if (numOfPhotos > 0)
-                          PhotoListWidget(numOfPhotos: numOfPhotos),
+                        // if (numOfPhotos > 0)
+                        //   PhotoListWidget(numOfPhotos: numOfPhotos),
                         Gaps.v10,
                         ReactionButtons()
                       ],
@@ -109,18 +109,18 @@ class _ReplyWidgetState extends State<ReplyWidget> {
   }
 }
 
-PostCardWidget getReply(String userName) {
-  ReplyDataModel replyInfo = generateFakeReply(userName);
-  return PostCardWidget(postData: replyInfo.postInfo, replyData: replyInfo);
-}
+// PostCardWidget getReply(String userName) {
+//   ReplyDataModel replyInfo = generateFakeReply(userName);
+//   return PostCardWidget(postData: replyInfo.postInfo, replyData: replyInfo);
+// }
 
-List<PostCardWidget> getReplies(String userName) {
-  List<PostCardWidget> postCardWidgets = [];
-  for (var i = 0; i < 15; i++) {
-    postCardWidgets.add(getReply(userName));
-  }
-  postCardWidgets
-      .sort((a, b) => a.replyData!.time < b.replyData!.time ? -1 : 1);
+// List<PostCardWidget> getReplies(String userName) {
+//   List<PostCardWidget> postCardWidgets = [];
+//   for (var i = 0; i < 15; i++) {
+//     postCardWidgets.add(getReply(userName));
+//   }
+//   postCardWidgets
+//       .sort((a, b) => a.replyData!.time < b.replyData!.time ? -1 : 1);
 
-  return postCardWidgets;
-}
+//   return postCardWidgets;
+// }

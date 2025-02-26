@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:threads_clone/utils/sizes.dart';
 import 'package:video_player/video_player.dart';
 
@@ -23,6 +24,7 @@ class CameraPreviewScreen extends StatefulWidget {
 
 class _CameraPreviewScreenState extends State<CameraPreviewScreen> {
   late final VideoPlayerController _videoPlayerController;
+  String? _croppedFilePath;
 
   Future<void> _initVideo() async {
     _videoPlayerController = VideoPlayerController.file(File(widget.file.path));
@@ -33,10 +35,29 @@ class _CameraPreviewScreenState extends State<CameraPreviewScreen> {
     setState(() {});
   }
 
+  Future<void> cropImage(String path) async {
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio3x2,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9
+      ],
+      uiSettings: [WebUiSettings(context: context)],
+    );
+    if (croppedFile != null) {
+      _croppedFilePath = croppedFile.path;
+      setState(() {});
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     if (isMP4(widget.file)) _initVideo();
+    if (isIMG(widget.file)) cropImage(widget.file.path);
   }
 
   @override
@@ -67,14 +88,21 @@ class _CameraPreviewScreenState extends State<CameraPreviewScreen> {
                             ? VideoPlayer(_videoPlayerController)
                             : null
                         : isIMG(widget.file)
-                            ? Image.file(File(widget.file.path))
+                            ? Image.file(
+                                File(_croppedFilePath == null
+                                    ? widget.file.path
+                                    : _croppedFilePath!),
+                              )
                             : Container(),
                   ),
                 ),
               ),
             ),
           ),
-          PreviewBottomBar(widget: widget),
+          PreviewBottomBar(
+              file: XFile(_croppedFilePath == null
+                  ? widget.file.path
+                  : _croppedFilePath!)),
         ],
       ),
     );
@@ -84,10 +112,10 @@ class _CameraPreviewScreenState extends State<CameraPreviewScreen> {
 class PreviewBottomBar extends StatelessWidget {
   const PreviewBottomBar({
     super.key,
-    required this.widget,
+    required this.file,
   });
 
-  final CameraPreviewScreen widget;
+  final XFile file;
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +136,7 @@ class PreviewBottomBar extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => Navigator.of(context).pop(widget.file),
+            onTap: () => Navigator.of(context).pop(file),
             child: Text(
               "사용 하기",
               style: TextStyle(

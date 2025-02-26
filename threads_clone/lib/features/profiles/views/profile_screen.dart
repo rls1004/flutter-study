@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threads_clone/features/auth/repos/authentication_repo.dart';
+import 'package:threads_clone/features/profiles/view_models/users_view_model.dart';
+import 'package:threads_clone/features/write/view_models/threads_view_model.dart';
 import 'package:threads_clone/utils/gaps.dart';
 import 'package:threads_clone/utils/sizes.dart';
 import 'package:threads_clone/features/profiles/views/settings/setting_screen.dart';
@@ -22,62 +24,94 @@ class ProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final String userName = ref.read(authRepo).user?.email?.split('@')[0] ?? "";
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: DefaultTabController(
-          length: 2,
-          child: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) => [
-              ProfileAppBar(
-                userName: userName,
-              ),
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: _StickyHeaderDelegate(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).scaffoldBackgroundColor,
+    return ref.watch(usersProvider).when(
+          error: (error, stackTrace) => Center(
+            child: Text(error.toString()),
+          ),
+          loading: () => Center(
+            child: CircularProgressIndicator.adaptive(),
+          ),
+          data: (data) => SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: DefaultTabController(
+                length: 2,
+                child: NestedScrollView(
+                  headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                    ProfileAppBar(
+                      userName: data.name,
                     ),
-                    alignment: Alignment.center,
-                    child: TabBar(
-                      dividerColor: Colors.grey,
-                      indicatorColor:
-                          isDarkMode(context) ? Colors.white : Colors.black,
-                      indicatorSize: TabBarIndicatorSize.tab,
-                      labelColor:
-                          isDarkMode(context) ? Colors.white : Colors.black,
-                      unselectedLabelColor: isDarkMode(context)
-                          ? Colors.white.withOpacity(0.5)
-                          : Colors.black.withOpacity(0.5),
-                      tabs: [
-                        Tab(
-                          child: Text("Threads"),
+                    SliverPersistentHeader(
+                      pinned: true,
+                      delegate: _StickyHeaderDelegate(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                          ),
+                          alignment: Alignment.center,
+                          child: TabBar(
+                            dividerColor: Colors.grey,
+                            indicatorColor: isDarkMode(context)
+                                ? Colors.white
+                                : Colors.black,
+                            indicatorSize: TabBarIndicatorSize.tab,
+                            labelColor: isDarkMode(context)
+                                ? Colors.white
+                                : Colors.black,
+                            unselectedLabelColor: isDarkMode(context)
+                                ? Colors.white.withOpacity(0.5)
+                                : Colors.black.withOpacity(0.5),
+                            tabs: [
+                              Tab(
+                                child: Text("Threads"),
+                              ),
+                              Tab(
+                                child: Text("Replies"),
+                              ),
+                            ],
+                          ),
                         ),
-                        Tab(
-                          child: Text("Replies"),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
+                  body: ref.watch(threadsProvider).when(
+                        loading: () => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        error: (error, stackTrace) => Center(
+                          child: Text(
+                            'Could not load threads: $error',
+                          ),
+                        ),
+                        data: (data) => TabBarView(
+                          children: [
+                            CustomScrollView(
+                              slivers: [
+                                SliverList.list(
+                                  children: data
+                                      .where((post) =>
+                                          post.creatorUid ==
+                                          ref.read(authRepo).user?.uid)
+                                      .map((post) =>
+                                          PostCardWidget(postData: post))
+                                      .toList(),
+                                ),
+                              ],
+                            ),
+                            CustomScrollView(
+                              slivers: [
+                                // SliverList.list(children: getReplies(data.name))
+                                SliverList.list(children: []),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                 ),
               ),
-            ],
-            body: TabBarView(
-              children: [
-                CustomScrollView(
-                  slivers: [SliverList.list(children: getThreads(userName))],
-                ),
-                CustomScrollView(
-                  slivers: [SliverList.list(children: getReplies(userName))],
-                ),
-              ],
             ),
           ),
-        ),
-      ),
-    );
+        );
   }
 }
 
