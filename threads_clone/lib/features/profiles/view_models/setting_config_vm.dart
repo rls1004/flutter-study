@@ -11,6 +11,13 @@ class SettingConfigViewModel extends Notifier<SettingConfigModel> {
     state = SettingConfigModel(darkMode: value);
   }
 
+  void addHistory(String value) {
+    _repository.addHistory(value);
+    state = SettingConfigModel(
+        darkMode: _repository.isDarkMode(),
+        searchHistory: _repository.getHistory());
+  }
+
   @override
   SettingConfigModel build() {
     return SettingConfigModel(darkMode: _repository.isDarkMode());

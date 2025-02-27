@@ -63,6 +63,19 @@ class ThreadsViewModel extends AsyncNotifier<List<PostModel>> {
       state = AsyncData(newList);
     } catch (e) {}
   }
+
+  List<PostModel> search(String search, {bool popular = false}) {
+    final filteredList = _list
+        .where((post) =>
+            post.description.toLowerCase().contains(search.toLowerCase()))
+        .toList();
+
+    if (popular) {
+      filteredList.sort((a, b) => b.likes.compareTo(a.likes));
+    }
+
+    return filteredList;
+  }
 }
 
 final threadsProvider =
