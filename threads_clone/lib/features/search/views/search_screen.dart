@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:threads_clone/features/home/views/widgets/post_card_widget.dart';
 import 'package:threads_clone/features/profiles/view_models/setting_config_vm.dart';
-import 'package:threads_clone/features/write/view_models/threads_view_model.dart';
+import 'package:threads_clone/features/common/view_models/threads_view_model.dart';
 import 'package:threads_clone/utils/gaps.dart';
 import 'package:threads_clone/utils/sizes.dart';
 import 'package:threads_clone/features/search/models/search_data_model.dart';

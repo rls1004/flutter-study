@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:threads_clone/features/write/view_models/threads_view_model.dart';
+import 'package:threads_clone/features/common/view_models/threads_view_model.dart';
 import 'package:threads_clone/utils/sizes.dart';
 import 'package:threads_clone/features/home/views/widgets/post_card_widget.dart';
 

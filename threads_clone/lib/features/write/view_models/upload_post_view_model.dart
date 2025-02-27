@@ -8,8 +8,8 @@ import 'package:threads_clone/features/auth/repos/authentication_repo.dart';
 import 'package:threads_clone/features/home/views/home_screen.dart';
 import 'package:threads_clone/features/profiles/view_models/users_view_model.dart';
 import 'package:threads_clone/features/write/models/post_model.dart';
-import 'package:threads_clone/features/write/repos/post_repo.dart';
-import 'package:threads_clone/features/write/view_models/threads_view_model.dart';
+import 'package:threads_clone/features/common/repos/post_repo.dart';
+import 'package:threads_clone/features/common/view_models/threads_view_model.dart';
 
 class UploadPostViewModel extends AsyncNotifier<void> {
   late final PostRepository _repository;
@@ -33,8 +33,6 @@ class UploadPostViewModel extends AsyncNotifier<void> {
             fileUrl = await task.ref.getDownloadURL();
           }
         }
-
-        print(userProfile.name);
 
         await _repository.savePost(
           PostModel(

@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:threads_clone/features/auth/repos/authentication_repo.dart';
-import 'package:threads_clone/features/home/views/home_screen.dart';
 import 'package:threads_clone/features/profiles/view_models/users_view_model.dart';
 import 'package:threads_clone/utils/utils.dart';
 

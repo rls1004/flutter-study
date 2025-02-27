@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:threads_clone/features/write/models/post_model.dart';
-import 'package:threads_clone/features/write/repos/post_repo.dart';
+import 'package:threads_clone/features/common/repos/post_repo.dart';
 
 class ThreadsViewModel extends AsyncNotifier<List<PostModel>> {
   late final PostRepository _repository;

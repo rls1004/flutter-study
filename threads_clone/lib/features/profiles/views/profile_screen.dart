@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:threads_clone/features/auth/repos/authentication_repo.dart';
 import 'package:threads_clone/features/profiles/view_models/users_view_model.dart';
-import 'package:threads_clone/features/write/view_models/threads_view_model.dart';
+import 'package:threads_clone/features/common/view_models/threads_view_model.dart';
 import 'package:threads_clone/utils/gaps.dart';
 import 'package:threads_clone/utils/sizes.dart';
 import 'package:threads_clone/features/profiles/views/settings/setting_screen.dart';
