@@ -30,12 +30,10 @@ class AnalysisViewModel extends AsyncNotifier<Map<String, List<CardModel>>> {
     final user = ref.read(authRepo).user;
     result = await _repository.fetchCards(user!.uid);
 
-    final newList = await Future.wait(
-      result.docs.map((doc) async {
-        CardModel post = CardModel.fromJson(doc.data(), doc.id);
-        return post;
-      }),
-    );
+    final newList = result.docs.map((doc) {
+      CardModel post = CardModel.fromJson(doc.data(), doc.id);
+      return post;
+    });
 
     Map<String, List<CardModel>> newData = {'this': [], 'last': []};
 
@@ -122,12 +120,10 @@ class AnalysisViewModel extends AsyncNotifier<Map<String, List<CardModel>>> {
     try {
       final user = ref.read(authRepo).user;
       result = await _repository.fetchCards(user!.uid);
-      final newList = await Future.wait(
-        result.docs.map((doc) async {
-          CardModel post = CardModel.fromJson(doc.data(), doc.id);
-          return post;
-        }),
-      );
+      final newList = result.docs.map((doc) {
+        CardModel post = CardModel.fromJson(doc.data(), doc.id);
+        return post;
+      });
 
       Map<String, List<CardModel>> newData = {'this': [], 'last': []};
 
@@ -175,12 +171,10 @@ class AnalysisViewModel extends AsyncNotifier<Map<String, List<CardModel>>> {
 
     int highestRecord = 0;
 
-    final newList = await Future.wait(
-      result.docs.map((doc) async {
-        CardModel post = CardModel.fromJson(doc.data(), doc.id);
-        return post;
-      }),
-    );
+    final newList = result.docs.map((doc) {
+      CardModel post = CardModel.fromJson(doc.data(), doc.id);
+      return post;
+    });
 
     String prevDay = "";
     int currentCount = 0;

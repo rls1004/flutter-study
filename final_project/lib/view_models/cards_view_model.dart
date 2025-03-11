@@ -26,12 +26,10 @@ class CardsViewModel extends AsyncNotifier<List<CardModel>> {
     final user = ref.read(authRepo).user;
     final result = await _repository.fetchCards(user!.uid);
 
-    final newList = await Future.wait(
-      result.docs.map((doc) async {
-        CardModel post = CardModel.fromJson(doc.data(), doc.id);
-        return post;
-      }),
-    );
+    final newList = result.docs.map((doc) {
+      CardModel post = CardModel.fromJson(doc.data(), doc.id);
+      return post;
+    });
     _list = newList.toList();
     return _list;
   }
@@ -41,14 +39,12 @@ class CardsViewModel extends AsyncNotifier<List<CardModel>> {
     try {
       final user = ref.read(authRepo).user;
       final result = await _repository.fetchCards(user!.uid);
-      final newList = await Future.wait(
-        result.docs.map((doc) async {
-          CardModel post = CardModel.fromJson(doc.data(), doc.id);
-          return post;
-        }),
-      );
+      final newList = result.docs.map((doc) {
+        CardModel post = CardModel.fromJson(doc.data(), doc.id);
+        return post;
+      });
       _list = newList.toList();
-      state = AsyncData(newList);
+      state = AsyncData(_list);
     } catch (e) {}
   }
 
