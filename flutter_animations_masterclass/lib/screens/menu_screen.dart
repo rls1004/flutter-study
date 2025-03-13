@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animations_masterclass/screens/assignment_28_screen.dart';
+import 'package:flutter_animations_masterclass/screens/assignment_29_screen.dart';
 import 'package:flutter_animations_masterclass/screens/implicit_animations_screen.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -27,6 +28,12 @@ class MenuScreen extends StatelessWidget {
                 _goToPage(context, Assignment28Screen());
               },
               child: Text("Assignment 28"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _goToPage(context, Assignment29Screen());
+              },
+              child: Text("Assignment 29"),
             ),
           ],
         ),
