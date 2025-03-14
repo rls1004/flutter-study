@@ -241,7 +241,7 @@ class TimerPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+  bool shouldRepaint(covariant TimerPainter oldDelegate) {
+    return oldDelegate.progress != progress;
   }
 }
