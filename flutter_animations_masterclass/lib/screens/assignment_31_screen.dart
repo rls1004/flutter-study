@@ -26,7 +26,7 @@ class _Assignment31ScreenState extends State<Assignment31Screen>
 
   late final AnimationController _flipController = AnimationController(
     vsync: this,
-    duration: Duration(seconds: 1),
+    duration: Duration(milliseconds: 600),
   )..addListener(() {
     if (_flipController.status == AnimationStatus.completed) {
       setState(() {
