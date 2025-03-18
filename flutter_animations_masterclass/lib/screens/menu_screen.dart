@@ -3,7 +3,9 @@ import 'package:flutter_animations_masterclass/screens/apple_watch_screen.dart';
 import 'package:flutter_animations_masterclass/screens/assignment_28_screen.dart';
 import 'package:flutter_animations_masterclass/screens/assignment_29_screen.dart';
 import 'package:flutter_animations_masterclass/screens/assignment_30_screen.dart';
+import 'package:flutter_animations_masterclass/screens/assignment_31_screen.dart';
 import 'package:flutter_animations_masterclass/screens/implicit_animations_screen.dart';
+import 'package:flutter_animations_masterclass/screens/swiping_cards_screen.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
@@ -48,6 +50,18 @@ class MenuScreen extends StatelessWidget {
                 _goToPage(context, Assignment30Screen());
               },
               child: Text("Assignment 30"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _goToPage(context, SwipingCardsScreen());
+              },
+              child: Text("Swiping Cards"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _goToPage(context, Assignment31Screen());
+              },
+              child: Text("Assignment 31"),
             ),
           ],
         ),
