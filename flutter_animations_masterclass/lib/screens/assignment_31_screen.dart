@@ -136,7 +136,7 @@ class _Assignment31ScreenState extends State<Assignment31Screen>
       builder: (context, child) {
         final angle =
             _rotation.transform(
-              (_positionController.value / 2 + size.width / 2) / (size.width),
+              (_positionController.value + size.width) / (2 * size.width),
             ) *
             pi /
             180;
