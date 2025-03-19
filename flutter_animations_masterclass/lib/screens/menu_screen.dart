@@ -5,6 +5,7 @@ import 'package:flutter_animations_masterclass/screens/assignment_29_screen.dart
 import 'package:flutter_animations_masterclass/screens/assignment_30_screen.dart';
 import 'package:flutter_animations_masterclass/screens/assignment_31_screen.dart';
 import 'package:flutter_animations_masterclass/screens/implicit_animations_screen.dart';
+import 'package:flutter_animations_masterclass/screens/music_player_screen.dart';
 import 'package:flutter_animations_masterclass/screens/swiping_cards_screen.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -62,6 +63,12 @@ class MenuScreen extends StatelessWidget {
                 _goToPage(context, Assignment31Screen());
               },
               child: Text("Assignment 31"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _goToPage(context, MusicPlayerScreen());
+              },
+              child: Text("Music Player"),
             ),
           ],
         ),
